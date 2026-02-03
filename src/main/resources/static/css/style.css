@@ -127,10 +127,16 @@ a {
     opacity: 0.8;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 600px) {
+    .logo {
+        font-size: 1.4rem;
+        /* Slightly smaller logo for small mobiles */
+        gap: 5px;
+    }
+
     .logo-sub {
-        display: none;
-        /* Hide on smaller laptops to keep menu items visible */
+        font-size: 0.6rem;
+        /* Smaller subtitle to fit next to name */
     }
 }
 
