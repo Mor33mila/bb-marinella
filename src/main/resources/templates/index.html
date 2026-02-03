@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- CONFIGURAZIONE HEAD: Meta tag, SEO, Titolo e Risorse esterne -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B&B Marinella | Lusso e Tradizione a Napoli - San Gregorio Armeno</title>
 
-    <!-- SEO: Descrizione e parole chiave per i motori di ricerca -->
-    <meta name="description"
-        content="B&B Marinella - Soggiorna nel cuore di Napoli, in Via San Gregorio Armeno. Camere di lusso, ospitalità autentica e sconti esclusivi per le attrazioni locali.">
-    <meta name="keywords"
-        content="B&B Napoli, San Gregorio Armeno, Cristo Velato, B&B Marinella, lusso Napoli, centro storico">
+<!-- SEO: Descrizione e parole chiave per i motori di ricerca -->
+<meta name="description"
+    content="B&B Marinella a Napoli: soggiorna nella storica Via San Gregorio Armeno. Camere eleganti, colazione inclusa e sconti per le attrazioni nel cuore del centro storico.">
+<meta name="keywords"
+    content="B&B Napoli, San Gregorio Armeno, B&B centro storico Napoli, B&B Marinella, dormire a Napoli, Cristo Velato">
 
-    <!-- OPEN GRAPH: Ottimizzazione per la condivisione sui social (WhatsApp, Facebook, etc.) -->
-    <meta property="og:title" content="B&B Marinella | Lusso e Tradizione a Napoli">
-    <meta property="og:description" content="Vivi la vera Napoli nel suggestivo Fondaco di San Gregorio Armeno.">
-    <meta property="og:image" content="../static/img/Napoli01.jpg">
-    <meta property="og:type" content="website">
+<link rel="canonical" href="https://www.bnbmarinella.it/">
 
-    <title>B&B Marinella | Lusso e Tradizione a Napoli</title>
+<!-- OPEN GRAPH: Ottimizzazione per la condivisione sui social (WhatsApp, Facebook, etc.) -->
+<meta property="og:title" content="B&B Marinella | Lusso e Tradizione a Napoli">
+<meta property="og:description" content="Vivi la vera Napoli nel suggestivo Fondaco di San Gregorio Armeno.">
+<meta property="og:url" content="https://www.bnbmarinella.it">
+<meta property="og:image" content="https://www.bnbmarinella.it/img/Napoli01.jpg">
+<meta property="og:type" content="website">
 
-    <!-- CSS: Collegamenti al foglio di stile locale e icone FontAwesome -->
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css(v=1.7)}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- STRUCTURED DATA: JSON-LD for Google rich snippets -->
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BedAndBreakfast",
+      "name": "B&B Marinella",
+      "image": "https://www.bnbmarinella.it/img/Napoli01.jpg",
+      "@id": "https://www.bnbmarinella.it",
+      "url": "https://www.bnbmarinella.it",
+      "telephone": "+393397993428",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via San Gregorio Armeno, 14",
+        "addressLocality": "Napoli",
+        "postalCode": "80138",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.8500962,
+        "longitude": 14.2579874
+      },
+      "description": "B&B Marinella - Soggiorna nel cuore di Napoli, in Via San Gregorio Armeno. Camere di lusso e ospitalità autentica.",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "20:00"
+      }
+    }
+    </script>
 
-    <!-- ICONA SITO (Favicon) -->
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}">
+<!-- CSS: Collegamenti al foglio di stile locale e icone FontAwesome -->
+<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css(v=1.7)}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- ICONA SITO (Favicon) -->
+<link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}">
 </head>
 
 <body>
@@ -56,8 +94,8 @@
     <!-- SEZIONE HERO: La prima immagine che vede l'utente con il benvenuto -->
     <header class="hero">
         <div class="fade-in-up">
-            <h1>Benvenuti a Napoli</h1>
-            <p>Scopri il fascino della città partenopea soggiornando in un ambiente raffinato ed accogliente.</p>
+            <h1>B&B Marinella | San Gregorio Armeno</h1>
+            <p>Vivi l'essenza di Napoli soggiornando in un ambiente raffinato nel cuore del centro storico.</p>
             <a href="#galleria" class="btn-primary" style="margin-top: 20px;">Verifica Disponibilità</a>
         </div>
     </header>
