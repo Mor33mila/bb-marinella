@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
 
-<title>B&B Marinella | Lusso e Tradizione a Napoli - San Gregorio Armeno</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B&B Marinella | Lusso e Tradizione a Napoli - San Gregorio Armeno</title>
 
-<!-- SEO: Descrizione e parole chiave per i motori di ricerca -->
-<meta name="description"
-    content="B&B Marinella a Napoli: soggiorna nella storica Via San Gregorio Armeno. Camere eleganti, colazione inclusa e sconti per le attrazioni nel cuore del centro storico.">
-<meta name="keywords"
-    content="B&B Napoli, San Gregorio Armeno, B&B centro storico Napoli, B&B Marinella, dormire a Napoli, Cristo Velato">
+    <!-- SEO: Descrizione e parole chiave per i motori di ricerca -->
+    <meta name="description"
+        content="B&B Marinella a Napoli: soggiorna nella storica Via San Gregorio Armeno. Camere eleganti, colazione inclusa e sconti per le attrazioni nel cuore del centro storico.">
+    <meta name="keywords"
+        content="B&B Napoli, San Gregorio Armeno, B&B centro storico Napoli, B&B Marinella, dormire a Napoli, Cristo Velato">
 
-<link rel="canonical" href="https://www.bnbmarinella.it/">
+    <link rel="canonical" href="https://www.bnbmarinella.it/">
 
-<!-- OPEN GRAPH: Ottimizzazione per la condivisione sui social (WhatsApp, Facebook, etc.) -->
-<meta property="og:title" content="B&B Marinella | Lusso e Tradizione a Napoli">
-<meta property="og:description" content="Vivi la vera Napoli nel suggestivo Fondaco di San Gregorio Armeno.">
-<meta property="og:url" content="https://www.bnbmarinella.it">
-<meta property="og:image" content="https://www.bnbmarinella.it/img/Napoli01.jpg">
-<meta property="og:type" content="website">
+    <!-- OPEN GRAPH: Ottimizzazione per la condivisione sui social (WhatsApp, Facebook, etc.) -->
+    <meta property="og:title" content="B&B Marinella | Lusso e Tradizione a Napoli">
+    <meta property="og:description" content="Vivi la vera Napoli nel suggestivo Fondaco di San Gregorio Armeno.">
+    <meta property="og:url" content="https://www.bnbmarinella.it">
+    <meta property="og:image" content="https://www.bnbmarinella.it/img/Napoli01.jpg">
+    <meta property="og:type" content="website">
 
-<!-- STRUCTURED DATA: JSON-LD for Google rich snippets -->
-<script type="application/ld+json">
+    <!-- STRUCTURED DATA: JSON-LD for Google rich snippets -->
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BedAndBreakfast",
@@ -58,17 +61,15 @@
     }
     </script>
 
-<!-- CSS: Collegamenti al foglio di stile locale e icone FontAwesome -->
-<link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css(v=1.7)}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- CSS: Collegamenti al foglio di stile locale e icone FontAwesome -->
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css(v=1.7)}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<!-- ICONA SITO (Favicon) -->
-<link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}">
+    <!-- ICONA SITO (Favicon) -->
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}">
 
-<!-- GoatCounter: Monitoraggio visite (Privacy-friendly, senza cookie) -->
-<script data-goatcounter="https://bbmarinella.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 
 <body>
@@ -779,6 +780,10 @@
 
     <!-- Script specifico per la logica di prenotazione e disponibilità -->
     <script src="../static/js/booking.js" th:src="@{/js/booking.js}"></script>
+
+    <!-- GoatCounter: Monitoraggio visite (Privacy-friendly, senza cookie) -->
+    <script data-goatcounter="https://bbmarinella.goatcounter.com/count" async
+        src="https://gc.zgo.at/count.js"></script>
 </body>
 
 </html>
