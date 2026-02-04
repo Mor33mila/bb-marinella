@@ -244,6 +244,40 @@ a {
     color: var(--background-white) !important;
 }
 
+/* BOTTONE RECENSIONI GOOGLE */
+.btn-review {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: transparent;
+    color: var(--secondary-color);
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: 2px solid var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.btn-review i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.btn-review:hover {
+    background-color: var(--primary-color);
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-review:hover i {
+    color: white;
+}
+
 /* SEZIONE HERO: Stile del banner di benvenuto a inizio pagina */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)), url('../img/Napoli01.jpg');
@@ -1238,13 +1272,6 @@ footer {
         display: block;
     }
 
-    /* Back to top mobile */
-    .back-to-top {
-        bottom: 20px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-    }
 }
 
 /* BOTTONE TORNA IN ALTO: Appare durante lo scroll */
@@ -1279,6 +1306,68 @@ footer {
     background-color: var(--secondary-color);
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
+}
+
+/* TASTO CAMBIO LINGUA: Sempre visibile, si sposta se appare il back-to-top */
+.lang-switcher {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    /* Uniformato a back-to-top */
+    height: 50px;
+    /* Uniformato a back-to-top */
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid white;
+    user-select: none;
+    overflow: hidden;
+    /* Taglia la bandiera a forma di cerchio */
+    padding: 0;
+}
+
+#langFlag {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#langFlag svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lang-switcher:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.lang-switcher.shifted {
+    bottom: 100px;
+    /* Si sposta sopra al tasto back-to-top */
+}
+
+@media (max-width: 1024px) {
+
+    .back-to-top,
+    .lang-switcher {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .lang-switcher.shifted {
+        bottom: 80px;
+    }
 }
 
 /* MODAL DI PRENOTAZIONE: Stile della finestra a comparsa */

@@ -83,39 +83,41 @@
             <span class="bar"></span>
         </div>
         <div class="nav-links">
-            <a href="#chi-siamo">Chi Siamo</a>
-            <a href="#galleria">Camere</a>
-            <a href="#galleria-full">Spazi</a>
-            <a href="#servizi">Servizi</a>
-            <a href="#regole">Regole</a>
-            <a href="#dove-siamo">Dove Siamo</a>
-            <a href="#recensioni">Recensioni</a>
-            <a href="#contatti">Contatti</a>
-            <a href="#galleria" class="btn-primary">Prenota Ora</a>
+            <a href="#chi-siamo" data-i18n="nav-about">Chi Siamo</a>
+            <a href="#galleria" data-i18n="nav-rooms">Camere</a>
+            <a href="#galleria-full" data-i18n="nav-spaces">Spazi</a>
+            <a href="#servizi" data-i18n="nav-services">Servizi</a>
+            <a href="#regole" data-i18n="nav-rules">Regole</a>
+            <a href="#dove-siamo" data-i18n="nav-location">Dove Siamo</a>
+            <a href="#recensioni" data-i18n="nav-reviews">Recensioni</a>
+            <a href="#contatti" data-i18n="nav-contacts">Contatti</a>
+            <a href="#galleria" class="btn-primary" data-i18n="nav-book">Prenota Ora</a>
         </div>
     </nav>
 
     <!-- SEZIONE HERO: La prima immagine che vede l'utente con il benvenuto -->
     <header class="hero">
         <div class="fade-in-up">
-            <h1>Benvenuti a Napoli</h1>
-            <p>Scopri il fascino della città partenopea soggiornando in un ambiente raffinato ed accogliente.</p>
-            <a href="#galleria" class="btn-primary" style="margin-top: 20px;">Verifica Disponibilità</a>
+            <h1 data-i18n="hero-title">Benvenuti a Napoli</h1>
+            <p data-i18n="hero-subtitle">Scopri il fascino della città partenopea soggiornando in un ambiente raffinato
+                ed accogliente.</p>
+            <a href="#galleria" class="btn-primary" style="margin-top: 20px;" data-i18n="hero-btn">Verifica
+                Disponibilità</a>
         </div>
     </header>
 
     <!-- SEZIONE CHI SIAMO: Storytelling sulla storia del Fondaco e della struttura -->
     <section id="chi-siamo" class="section text-center hidden-el">
-        <span class="section-title">La Nostra Storia</span>
-        <h2>Tradizione & Ospitalità</h2>
+        <span class="section-title" data-i18n="about-history">La Nostra Storia</span>
+        <h2 data-i18n="about-tradition">Tradizione & Ospitalità</h2>
         <div class="section-divider"></div>
         <div class="about-content" style="max-width: 900px; margin: 0 auto; line-height: 1.8;">
-            <p>
+            <p data-i18n="about-p1">
                 Il <strong>B&B Marinella</strong> nasce nel 2025, appena ristrutturato e dotato di ogni comfort, con un
                 obiettivo preciso: far conoscere ai nostri ospiti la vera ospitalità napoletana attraverso una gestione
                 autenticamente familiare.
             </p>
-            <p>
+            <p data-i18n="about-p2">
                 La nostra struttura si trova all’interno del suggestivo <strong>Fondaco di Via San Gregorio
                     Armeno</strong>, nel cuore del centro storico di Napoli. Il fondaco è uno degli ultimi sopravvissuti
                 al “Risanamento” dell’Ottocento: uno spazio unico, simile a una piccola piazza interna sulla quale si
@@ -127,14 +129,14 @@
                 style="background: rgba(0, 95, 115, 0.05); padding: 25px; border-radius: 15px; margin: 30px 0; border-left: 5px solid var(--primary-color);">
                 <i class="fas fa-palette"
                     style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 10px;"></i>
-                <p style="font-style: italic; margin: 0;">
+                <p style="font-style: italic; margin: 0;" data-i18n="about-sanmartino">
                     Si racconta che proprio in questo fondaco nacque <strong>Giuseppe Sanmartino</strong>, lo scultore
                     del celebre <em>Cristo Velato</em> custodito nella Cappella Sansevero, a pochi passi dalla nostra
                     struttura. Un dettaglio che rende questo luogo ancora più carico di storia, arte e fascino.
                 </p>
             </div>
 
-            <p>
+            <p data-i18n="about-interiors">
                 Gli interni moderni ed eleganti si fondono con il calore della tradizione, creando un ambiente
                 accogliente e raffinato. Ogni dettaglio è stato pensato per farvi sentire a casa, offrendovi un rifugio
                 di pace e comfort dopo una giornata trascorsa tra i vicoli, i musei, le meraviglie artistiche e il mare
@@ -146,8 +148,8 @@
     <!-- SEZIONE GALLERIA CAMERE: Mostra le due suite principali con i relativi carousel -->
     <section id="galleria" class="section bg-light hidden-el">
         <div class="text-center mb-large">
-            <span class="section-title">Le Nostre Stanze</span>
-            <h2>Soggiorna nel Lusso di Napoli</h2>
+            <span class="section-title" data-i18n="rooms-title">Le Nostre Stanze</span>
+            <h2 data-i18n="rooms-subtitle">Soggiorna nel Lusso di Napoli</h2>
             <div class="section-divider"></div>
         </div>
 
@@ -191,28 +193,31 @@
                     <div class="carousel-indicators" style="bottom: 10px;"></div>
                 </div>
                 <div class="room-content">
-                    <div class="room-badge">Comfort</div>
-                    <h3>Suite Vesuvio</h3>
+                    <div class="room-badge" data-i18n="room-badge-comfort">Comfort</div>
+                    <h3 data-i18n="room-vesuvio">Suite Vesuvio</h3>
                     <div class="room-price"
                         style="font-family: var(--font-body); color: var(--primary-color); font-weight: 700; margin-bottom: 10px; font-size: 0.95rem;">
-                        A partire da <span style="font-size: 1.2rem;">€80</span> / notte
+                        <span data-i18n="room-price-from">A partire da</span> <span
+                            style="font-size: 1.2rem;">€80</span> <span data-i18n="room-night">/ notte</span>
                     </div>
                     <div class="room-features">
-                        <i class="fas fa-user-friends" title="Capacità: 1-2 Persone"></i>
-                        <span>1 - 2 Ospiti</span>
+                        <i class="fas fa-users" title="Capacità: 1-2 Persone"></i>
+                        <span data-i18n="room-guests-v">1 - 2 Ospiti</span>
                         <span class="feature-divider">|</span>
-                        <i class="fas fa-bed" title="Letto Matrimoniale alla Francese"></i>
-                        <span>Letto alla Francese</span>
+                        <i class="fas fa-bed" title="Letto alla Francese"></i>
+                        <span data-i18n="room-bed-french">Letto alla Francese</span>
                         <span class="feature-divider">|</span>
                         <i class="fas fa-bath" title="Bagno Privato"></i>
-                        <span>Bagno Privato</span>
+                        <span data-i18n="room-bath">Bagno Privato</span>
                     </div>
-                    <p class="text-muted">Un rifugio accogliente ed essenziale. Dispone di un confortevole <strong>letto
+                    <p class="text-muted" data-i18n="room-vesuvio-desc">Un rifugio accogliente ed essenziale. Dispone di
+                        un confortevole <strong>letto
                             matrimoniale alla francese</strong> (piazza e mezza), ideale per chi cerca praticità e
                         comfort nel cuore di Napoli a un prezzo vantaggioso.</p>
                     <a href="#" class="btn-primary open-booking-modal" data-room="stanza1"
-                        data-room-name="Suite Vesuvio"
-                        style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;">Prenota Vesuvio</a>
+                        data-room-name="Suite Vesuvio" style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;">
+                        <span data-i18n="room-btn-vesuvio">Prenota Vesuvio</span>
+                    </a>
                 </div>
             </div>
 
@@ -255,31 +260,33 @@
                     <div class="carousel-indicators" style="bottom: 10px;"></div>
                 </div>
                 <div class="room-content">
-                    <div class="room-badge premium">Premium</div>
-                    <h3>Suite Partenope</h3>
+                    <div class="room-badge premium" data-i18n="room-badge-premium">Premium</div>
+                    <h3 data-i18n="room-partenope">Suite Partenope</h3>
                     <div class="room-price"
                         style="font-family: var(--font-body); color: var(--primary-color); font-weight: 700; margin-bottom: 10px; font-size: 0.95rem;">
-                        A partire da <span style="font-size: 1.2rem;">€110</span> / notte
+                        <span data-i18n="room-price-from">A partire da</span> <span
+                            style="font-size: 1.2rem;">€110</span> <span data-i18n="room-night">/ notte</span>
                     </div>
                     <div class="room-features">
                         <i class="fas fa-users" title="Capacità: 2-3 Persone"></i>
                         <div style="display: flex; flex-direction: column; align-items: center;">
-                            <span>2 - 3 Ospiti*</span>
-                            <small style="font-size: 0.6rem; opacity: 0.8; line-height: 1;">*Bambini inclusi</small>
+                            <span data-i18n="room-guests-p">2 - 3 Ospiti*</span>
                         </div>
                         <span class="feature-divider">|</span>
                         <i class="fas fa-bed" title="Letto Matrimoniale Large + Letto Extra"></i>
-                        <span>King Size + Letto Extra</span>
+                        <span data-i18n="room-bed-partenope">King Size + Letto Extra</span>
                         <span class="feature-divider">|</span>
                         <i class="fas fa-bath" title="Bagno Privato"></i>
-                        <span>Bagno Privato</span>
+                        <span data-i18n="room-bath">Bagno Privato</span>
                     </div>
-                    <p class="text-muted">La nostra proposta più esclusiva e spaziosa. Dotata di un <strong>ampio letto
+                    <p class="text-muted" data-i18n="room-partenope-desc">La nostra proposta più esclusiva e spaziosa.
+                        Dotata di un <strong>ampio letto
                             matrimoniale</strong>, con la possibilità di aggiungere un <strong>letto singolo
                             extra</strong>. Perfetta per chi desidera il massimo del lusso e dello spazio.</p>
                     <a href="#" class="btn-primary open-booking-modal" data-room="stanza2"
                         data-room-name="Suite Partenope"
-                        style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;">Prenota Partenope</a>
+                        style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;"><span
+                            data-i18n="room-btn-partenope">Prenota Partenope</span></a>
                 </div>
             </div>
         </div>
@@ -288,8 +295,8 @@
     <!-- GALLERIE FULL: Altre foto riguardanti l'ingresso, le aree comuni e i dintorni -->
     <section id="galleria-full" class="gallery-section">
         <div class="text-center mb-large">
-            <span class="section-title">Aree Comuni e Dintorni</span>
-            <h2>Galleria degli Spazi</h2>
+            <span class="section-title" data-i18n="nav-spaces">Aree Comuni e Dintorni</span>
+            <h2 data-i18n="spaces-title">Galleria degli Spazi</h2>
             <div class="section-divider"></div>
         </div>
 
@@ -297,7 +304,7 @@
         <div class="gallery-container">
             <div class="gallery-title-wrapper">
                 <i class="fas fa-door-open"></i>
-                <h3>Ingresso e Aree Comuni</h3>
+                <h3 data-i18n="spaces-lobby-title">Ingresso e Aree Comuni</h3>
             </div>
             <div class="carousel-outer">
                 <div class="carousel-track">
@@ -320,7 +327,7 @@
         <div class="gallery-container">
             <div class="gallery-title-wrapper">
                 <i class="fas fa-street-view"></i>
-                <h3>Esterni e La Nostra Strada</h3>
+                <h3 data-i18n="spaces-exterior-title">Esterni e La Nostra Strada</h3>
             </div>
             <div class="carousel-outer">
                 <div class="carousel-track">
@@ -343,10 +350,10 @@
     </section>
 
     <!-- SEZIONE SERVIZI: Griglia moderna che elenca i comfort inclusi nel soggiorno -->
-    <section id="servizi" class="section">
+    <section id="servizi" class="section bg-light hidden-el">
         <div class="text-center mb-large">
-            <span class="section-title">Ospitalità d'Eccellenza</span>
-            <h2>I Nostri Servizi & Esperienze</h2>
+            <span class="section-title" data-i18n="nav-services">Servizi</span>
+            <h2 data-i18n="services-title">I Nostri Servizi</h2>
             <div class="section-divider"></div>
         </div>
 
@@ -354,71 +361,87 @@
             <!-- Category 1: Bagno & Benessere -->
             <div class="service-category-card">
                 <i class="fas fa-bath cat-icon"></i>
-                <h3>Bagno & Benessere</h3>
+                <h3 data-i18n="service-cat1">Bagno & Benessere</h3>
                 <ul>
-                    <li><i class="fas fa-check"></i> Bagno privato</li>
-                    <li><i class="fas fa-check"></i> Prodotti da bagno in omaggio</li>
-                    <li><i class="fas fa-check"></i> Accappatoio e Pantofole</li>
-                    <li><i class="fas fa-check"></i> Asciugamani e Carta igienica</li>
-                    <li><i class="fas fa-check"></i> Asciugacapelli</li>
-                    <li><i class="fas fa-check"></i> Servizi igienici aggiuntivi</li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-pvt">Bagno privato</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-prod">Prodotti da bagno in
+                            omaggio</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-robe">Accappatoio e Pantofole</span>
+                    </li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-towels">Asciugamani e Carta
+                            igienica</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-hair">Asciugacapelli</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bath-extra">Servizi igienici
+                            aggiuntivi</span></li>
                 </ul>
             </div>
 
             <!-- Category 2: Comfort in Camera -->
             <div class="service-category-card">
                 <i class="fas fa-bed cat-icon"></i>
-                <h3>Comfort in Camera</h3>
+                <h3 data-i18n="service-cat2">Comfort in Camera</h3>
                 <ul>
-                    <li><i class="fas fa-check"></i> Biancheria da letto premium</li>
-                    <li><i class="fas fa-check"></i> Armadio / Guardaroba</li>
-                    <li><i class="fas fa-check"></i> Presa elettrica vicino al letto</li>
-                    <li><i class="fas fa-check"></i> Aria condizionata e Riscaldamento</li>
-                    <li><i class="fas fa-check"></i> Camera anallergica</li>
-                    <li><i class="fas fa-check"></i> Camere non fumatori</li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-bed-premium">Biancheria da letto
+                            premium</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-room-closet">Armadio / Guardaroba</span>
+                    </li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-room-power">Presa elettrica vicino al
+                            letto</span></li>
+                    <li data-i18n="service-ac-heat"><i class="fas fa-check"></i> Aria condizionata e Riscaldamento</li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-room-allergy">Camera anallergica</span>
+                    </li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="service-room-smoke">Camere non fumatori</span>
+                    </li>
                 </ul>
             </div>
 
-            <!-- Category 3: Tecnologia -->
+            <!-- Category 3: Connettività -->
             <div class="service-category-card highlighted-tech">
                 <i class="fas fa-wifi cat-icon"></i>
-                <h3>Connettività & Media</h3>
+                <h3 data-i18n="service-cat3">Connettività & Media</h3>
                 <div class="wifi-speed">315 Mbps</div>
-                <p><strong>WiFi Fibra Super Veloce</strong><br>Gratuito e adatto per streaming 4K, smart working e
-                    videochiamate.</p>
-                <ul>
-                    <li><i class="fas fa-tv"></i> TV a schermo piatto</li>
-                </ul>
-            </div>
-
-            <!-- Category 4: Gusto & Ristorazione -->
-            <div class="service-category-card">
-                <i class="fas fa-utensils cat-icon"></i>
-                <h3>Gusto & Praticità</h3>
-                <ul>
-                    <li><i class="fas fa-coffee"></i> Bollitore tè / Macchina caffè</li>
-                    <li><i class="fas fa-snowflake"></i> Frigorifero</li>
-                    <li><i class="fas fa-mug-hot"></i> Bollitore elettrico</li>
-                </ul>
-                <div class="breakfast-highlight">
-                    <i class="fas fa-star"></i>
-                    <strong>Colazione Inclusa Sempre</strong>
-                    <p>Sperimenta la vera cultura napoletana con la colazione servita in un bar tipico nelle vicinanze.
-                    </p>
+                <p data-i18n="service-wifi-text"><strong>WiFi Fibra Super Veloce</strong><br>Gratuito e adatto per
+                    streaming 4K, smart working e videochiamate.</p>
+                <div style="margin-top: 10px; font-size: 0.9rem;">
+                    <i class="fas fa-tv" style="color: var(--primary-color); margin-right: 8px;"></i> Smart TV 4K Ultra
+                    HD
                 </div>
             </div>
 
-            <!-- Category 5: Sicurezza & Extra -->
+            <!-- Category 4: Gusto -->
+            <div class="service-category-card">
+                <i class="fas fa-utensils cat-icon"></i>
+                <h3 data-i18n="service-cat4">Gusto & Praticità</h3>
+                <ul>
+                    <li><i class="fas fa-coffee"></i> <span data-i18n="service-coffee">Bollitore tè / Macchina
+                            caffè</span></li>
+                    <li><i class="fas fa-snowflake"></i> <span data-i18n="service-fridge">Frigorifero</span></li>
+                    <li><i class="fas fa-coffee"></i> <span data-i18n="service-kettle">Bollitore elettrico</span></li>
+                </ul>
+                <div class="breakfast-highlight" style="margin-top: 15px;">
+                    <i class="fas fa-star"></i>
+                    <strong data-i18n="service-breakfast">Colazione Inclusa Sempre</strong>
+                    <p data-i18n="service-breakfast-desc">Sperimenta la vera cultura napoletana con la colazione servita
+                        in un bar tipico nelle vicinanze.</p>
+                </div>
+            </div>
+
+            <!-- Category 5: Sicurezza -->
             <div class="service-category-card">
                 <i class="fas fa-shield-alt cat-icon"></i>
-                <h3>Sicurezza & Supporto</h3>
+                <h3 data-i18n="service-cat5">Sicurezza & Supporto</h3>
                 <ul>
-                    <li><i class="fas fa-key"></i> Accesso con chiavi magnetiche</li>
-                    <li><i class="fas fa-user-shield"></i> Sicurezza 24 ore su 24</li>
-                    <li><i class="fas fa-concierge-bell"></i> Check-in/out privati</li>
-                    <li><i class="fas fa-camera"></i> Telecamere zone comuni</li>
-                    <li><i class="fas fa-broom"></i> Pulizie</li>
-                    <li><i class="fas fa-luggage-cart"></i> Deposito bagagli</li>
+                    <li><i class="fas fa-key"></i> <span data-i18n="service-key">Accesso con chiavi magnetiche</span>
+                    </li>
+                    <li><i class="fas fa-user-shield"></i> <span data-i18n="service-security">Sicurezza 24 ore su
+                            24</span></li>
+                    <li><i class="fas fa-concierge-bell"></i> <span data-i18n="service-checkin-out">Check-in/out
+                            privati</span></li>
+                    <li><i class="fas fa-video"></i> <span data-i18n="service-cameras">Telecamere zone comuni</span>
+                    </li>
+                    <li><i class="fas fa-broom"></i> <span data-i18n="service-cleaning">Pulizie</span></li>
+                    <li><i class="fas fa-luggage-cart"></i> <span data-i18n="service-luggage">Deposito bagagli</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -426,20 +449,22 @@
         <!-- Special Offers / Convensioni -->
         <div class="special-offers-container">
             <div class="offer-card neapolis-card">
-                <div class="offer-badge">Speciale Ospiti</div>
+                <div class="offer-badge" data-i18n="offer-badge-guest">Speciale Ospiti</div>
                 <i class="fas fa-history"></i>
-                <h3>La Neapolis Sotterrata</h3>
-                <p>Approfitta degli <strong>sconti esclusivi</strong> sul biglietto intero per la visita guidata al
+                <h3 data-i18n="offer-neapolis-title">La Neapolis Sotterrata</h3>
+                <p data-i18n="offer-neapolis-desc">Approfitta degli <strong>sconti esclusivi</strong> sul biglietto
+                    intero per la visita guidata al
                     Complesso Monumentale di San Lorenzo Maggiore in Piazza San Gaetano.</p>
-                <small>*Ticket sconto fornito direttamente in struttura</small>
+                <small data-i18n="offer-neapolis-note">*Ticket sconto fornito direttamente in struttura</small>
             </div>
             <div class="offer-card ristoranti-card">
-                <div class="offer-badge">Gusto Locale</div>
+                <div class="offer-badge" data-i18n="offer-badge-taste">Gusto Locale</div>
                 <i class="fas fa-pizza-slice"></i>
-                <h3>Ristoranti Partner</h3>
-                <p>Abbiamo selezionato per te i migliori ristoranti locali dove potrai cenare con <strong>tariffe
+                <h3 data-i18n="offer-rest-title">Ristoranti Partner</h3>
+                <p data-i18n="offer-rest-desc">Abbiamo selezionato per te i migliori ristoranti locali dove potrai
+                    cenare con <strong>tariffe
                         agevolate</strong> riservate ai nostri ospiti.</p>
-                <small>*Sconti validi in cassa presso i locali convenzionati</small>
+                <small data-i18n="offer-rest-note">*Sconti validi in cassa presso i locali convenzionati</small>
             </div>
         </div>
     </section>
@@ -447,8 +472,8 @@
     <!-- SEZIONE REGOLE: Informazioni pratiche su orari e politiche interne -->
     <section id="regole" class="section bg-light hidden-el">
         <div class="text-center mb-large">
-            <span class="section-title">Informazioni Utili</span>
-            <h2>Regole della Casa</h2>
+            <span class="section-title" data-i18n="rules-title">Informazioni Utili</span>
+            <h2 data-i18n="rules-subtitle">Regole della Casa</h2>
             <div class="section-divider"></div>
         </div>
 
@@ -456,37 +481,43 @@
             <li>
                 <i class="fas fa-clock"></i>
                 <div>
-                    <strong>Arrivo:</strong> Dalle 08:00 alle 20:00
+                    <strong data-i18n="rule-arrival">Arrivo</strong>: <span data-i18n="rule-arrival-desc">Dalle 08:00
+                        alle 20:00</span>
                 </div>
             </li>
             <li>
                 <i class="fas fa-sign-out-alt"></i>
                 <div>
-                    <strong>Partenza:</strong> Dalle 08:00 alle 10:00
+                    <strong data-i18n="rule-departure">Partenza</strong>: <span data-i18n="rule-departure-desc">Dalle
+                        08:00 alle 10:00</span>
                 </div>
             </li>
             <li>
                 <i class="fas fa-volume-mute"></i>
                 <div>
-                    <strong>Rumore:</strong> Dalle 00:00 alle 08:00 si prega di osservare il massimo silenzio
+                    <strong data-i18n="rule-quiet">Rumore:</strong> <span data-i18n="rule-quiet-desc">Dalle 00:00 alle
+                        08:00 si prega di osservare il massimo silenzio</span>
                 </div>
             </li>
             <li class="rule-ban">
                 <i class="fas fa-paw"></i>
                 <div>
-                    <strong>Animali:</strong> Animali non ammessi
+                    <strong data-i18n="rule-pets">Animali:</strong> <span data-i18n="rule-pets-desc">Animali non
+                        ammessi</span>
                 </div>
             </li>
             <li class="rule-ban">
                 <i class="fas fa-smoking-ban"></i>
                 <div>
-                    <strong>Fumo:</strong> Fumare non è consentito
+                    <strong data-i18n="rule-smoke">Fumo:</strong> <span data-i18n="rule-smoke-desc">Fumare non è
+                        consentito</span>
                 </div>
             </li>
             <li class="rule-ban">
                 <i class="fas fa-glass-cheers"></i>
                 <div>
-                    <strong>Feste:</strong> Non è permesso organizzare feste o eventi
+                    <strong data-i18n="rule-events">Feste:</strong> <span data-i18n="rule-events-desc">Non è permesso
+                        organizzare feste o eventi</span>
                 </div>
             </li>
         </ul>
@@ -495,10 +526,10 @@
     <!-- SEZIONE DOVE SIAMO: Mappa interattiva e distanze dai principali punti di interesse -->
     <section id="dove-siamo" class="section hidden-el">
         <div class="text-center mb-large">
-            <span class="section-title">La Nostra Posizione</span>
-            <h2>Dove Siamo</h2>
+            <span class="section-title" data-i18n="poi-title">La Nostra Posizione</span>
+            <h2 data-i18n="poi-subtitle">Dove Siamo</h2>
             <div class="section-divider"></div>
-            <p style="max-width: 600px; margin: 0 auto; margin-bottom: 30px;" class="text-muted">
+            <p style="max-width: 600px; margin: 0 auto; margin-bottom: 30px;" class="text-muted" data-i18n="poi-desc">
                 Ci troviamo in una posizione strategica, a pochi passi dalle principali attrazioni turistiche e ben
                 collegati con i mezzi pubblici.
             </p>
@@ -513,11 +544,11 @@
                 </div>
                 <div class="contact-info-item">
                     <i class="fas fa-walking"></i>
-                    <span>Nel cuore di Spaccanapoli</span>
+                    <span data-i18n="poi-heart">Nel cuore di Spaccanapoli</span>
                 </div>
                 <br>
                 <a href="https://www.google.com/maps/place/B%26B+Marinella/@40.8501002,14.253374,17z/data=!3m1!4b1!4m9!3m8!1s0x133b09500ff07e8d:0x181578c7d59fd972!5m2!4m1!1i2!8m2!3d40.8500962!4d14.2579874!16s%2Fg%2F11xdvtyjkg?entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D"
-                    target="_blank" class="btn-primary">Apri in Google Maps</a>
+                    target="_blank" class="btn-primary" data-i18n="poi-maps">Apri in Google Maps</a>
             </div>
 
             <div class="map-container">
@@ -532,7 +563,7 @@
         <div class="poi-grid-container">
             <!-- Column 1: A Piedi -->
             <div class="poi-column">
-                <h4><i class="fas fa-walking"></i> Nelle Vicinanze</h4>
+                <h4><i class="fas fa-walking"></i> <span data-i18n="poi-walking">Nelle Vicinanze</span></h4>
                 <div class="poi-item">
                     <span class="poi-name">Cappella Sansevero</span>
                     <span class="poi-dist">450 m</span>
@@ -553,7 +584,7 @@
 
             <!-- Column 2: Icone -->
             <div class="poi-column">
-                <h4><i class="fas fa-landmark"></i> Icone di Napoli</h4>
+                <h4><i class="fas fa-landmark"></i> <span data-i18n="poi-icons">Icone di Napoli</span></h4>
                 <div class="poi-item">
                     <span class="poi-name">Museo Archeologico (MANN)</span>
                     <span class="poi-dist">1,1 km</span>
@@ -574,7 +605,7 @@
 
             <!-- Column 3: Trasporti -->
             <div class="poi-column">
-                <h4><i class="fas fa-subway"></i> Trasporti</h4>
+                <h4><i class="fas fa-subway"></i> <span data-i18n="poi-transport">Trasporti</span></h4>
                 <div class="poi-item">
                     <span class="poi-name">Metro L1 Dante</span>
                     <span class="poi-dist">800 m</span>
@@ -602,10 +633,10 @@
     <!-- SEZIONE RECENSIONI: Testimonianze degli ospiti da Booking e Google -->
     <section id="recensioni" class="section bg-white hidden-el">
         <div class="text-center mb-large">
-            <span class="section-title">Dicono di noi</span>
-            <h2>Recensioni degli Ospiti</h2>
+            <span class="section-title" data-i18n="reviews-title">Dicono di noi</span>
+            <h2 data-i18n="reviews-subtitle">Recensioni degli Ospiti</h2>
             <div class="section-divider"></div>
-            <p class="text-muted" style="max-width: 700px; margin: 0 auto;">
+            <p class="text-muted" style="max-width: 700px; margin: 0 auto;" data-i18n="reviews-desc">
                 La vostra soddisfazione è il nostro miglior biglietto da visita. Ecco cosa pensa chi ha già soggiornato
                 da noi.
             </p>
@@ -698,13 +729,21 @@
             </div>
             <button class="reviews-nav-btn next" id="revNext"><i class="fas fa-chevron-right"></i></button>
         </div>
+        <div class="text-center" style="margin-top: 50px;">
+            <a href="https://g.page/r/CXLZn9XHeBUYEBM/review" target="_blank" class="btn-review">
+                <i class="fab fa-google"></i> <span data-i18n="review-btn">Lascia una Recensione su Google</span>
+            </a>
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 15px;" data-i18n="review-note">La tua opinione
+                è preziosa per noi!</p>
+        </div>
     </section>
 
     <!-- FOOTER: Informazioni di contatto, link social e copyright -->
     <footer id="contatti">
         <div class="footer-content">
             <h2 style="color: white; margin-bottom: 5px;">B&B Marinella</h2>
-            <p style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Lusso e Tradizione</p>
+            <p style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;" data-i18n="footer-luxury">
+                Lusso e Tradizione</p>
 
             <div style="margin: 30px 0;">
                 <p><i class="fas fa-phone-alt"></i> +39 339 7993428</p>
@@ -721,13 +760,18 @@
                 </a>
             </div>
 
-            <!-- COPYRIGHT E CREDITS: Anno dinamico e firma dello sviluppatore -->
-            <div class="copyright">
-                <p>&copy; <span id="currentYear"></span> B&B Marinella Napoli. Tutti i diritti riservati.</p>
+            <div class="copyright" style="margin-top: 30px;">
+                <p>&copy; <span id="currentYear"></span> B&B Marinella Napoli. <span data-i18n="footer-rights">Tutti i
+                        diritti riservati.</span></p>
                 <p style="font-size: 0.75rem; margin-top: 5px; opacity: 0.8;">Developed by Lorenzo Lombardi</p>
             </div>
         </div>
     </footer>
+
+    <!-- Language Switcher Floating Button -->
+    <div id="langSwitcher" class="lang-switcher" title="Cambia Lingua / Change Language">
+        <div id="langFlag" style="display: flex; align-items: center; justify-content: center;"></div>
+    </div>
 
     <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" title="Torna in alto">
@@ -738,33 +782,36 @@
     <div id="bookingModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2 id="modalRoomTitle">Prenota Camera</h2>
+            <h2 id="modalRoomTitle" data-i18n="modal-title">Prenota Camera</h2>
             <div class="booking-form-wrapper">
                 <input type="hidden" id="selectedRoomId">
 
                 <div class="form-group">
-                    <label for="modalNome"><i class="fas fa-user"></i> Nome e Cognome</label>
+                    <label for="modalNome"><i class="fas fa-user"></i> <span data-i18n="modal-name">Nome e
+                            Cognome</span></label>
                     <input type="text" id="modalNome" class="form-control" placeholder="Il tuo nome" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="modalPersone"><i class="fas fa-users"></i> Numero di Persone</label>
+                    <label for="modalPersone"><i class="fas fa-users"></i> <span
+                            data-i18n="room-guests">Ospiti</span></label>
                     <input type="number" id="modalPersone" class="form-control" placeholder="Quante persone?" min="1"
                         required>
                 </div>
 
                 <div class="form-group">
-                    <label for="modalDateRange"><i class="fas fa-calendar-alt"></i> Seleziona Date</label>
-                    <input type="text" id="modalDateRange" class="form-control"
-                        placeholder="Seleziona arrivo e partenza">
+                    <label for="modalDateRange"><i class="fas fa-calendar-alt"></i> <span
+                            data-i18n="modal-checkin">Seleziona Date</span></label>
+                    <input type="text" id="modalDateRange" class="form-control" placeholder="Arrivo - Partenza">
                 </div>
 
                 <div id="availabilityLoader" style="display:none; text-align: center; margin: 10px 0;">
-                    <i class="fas fa-spinner fa-spin"></i> Controllo disponibilità...
+                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="modal-loading">Controllo
+                        disponibilità...</span>
                 </div>
 
                 <button id="modalPrenotaBtn" class="btn-primary" style="width: 100%; margin-top: 10px;">
-                    <i class="fab fa-whatsapp"></i> Richiedi su WhatsApp
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="modal-send">Invia Richiesta</span>
                 </button>
             </div>
         </div>
