@@ -370,7 +370,14 @@ document.addEventListener('DOMContentLoaded', () => {
             "modal-loading": "Controllo disponibilità...",
             "modal-success-title": "Richiesta Inviata!",
             "modal-success-desc": "Ti ricontatteremo al più presto per confermare.",
-            "modal-back": "Indietro"
+            "modal-back": "Indietro",
+            "wa-greet": "Ciao io sono ",
+            "wa-want-to-book": " e vorrei prenotare la camera ",
+            "wa-for": " per ",
+            "wa-people": " persone ",
+            "wa-dates-from": " per queste date: dal ",
+            "wa-to": " al ",
+            "modal-booking-prefix": "Prenota "
         },
         en: {
             "nav-home": "Home",
@@ -495,11 +502,20 @@ document.addEventListener('DOMContentLoaded', () => {
             "modal-loading": "Checking availability...",
             "modal-success-title": "Request Sent!",
             "modal-success-desc": "We will contact you as soon as possible to confirm.",
-            "modal-back": "Back"
+            "modal-back": "Back",
+            "wa-greet": "Hi, I am ",
+            "wa-want-to-book": " and I would like to book the ",
+            "wa-for": " for ",
+            "wa-people": " people ",
+            "wa-dates-from": " for these dates: from ",
+            "wa-to": " to ",
+            "modal-booking-prefix": "Book "
         }
     };
 
-    let currentLang = localStorage.getItem('bb-lang') || 'it';
+    // Esponi traduzioni e lingua corrente al global scope per booking.js
+    window.translations = translations;
+    window.currentLang = localStorage.getItem('bb-lang') || 'it';
     const langSwitcher = document.getElementById('langSwitcher');
     const langFlag = document.getElementById('langFlag');
 
@@ -521,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
         langFlag.innerHTML = lang === 'it' ? flags.en : flags.it;
 
         currentLang = lang;
+        window.currentLang = lang; // Aggiorna anche la variabile globale
         localStorage.setItem('bb-lang', lang);
     };
 

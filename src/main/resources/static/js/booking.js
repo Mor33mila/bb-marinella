@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Funzione principale per aprire il modal e preparare i campi
     function openModal(roomId, roomName) {
         modal.style.display = 'block';
-        modalRoomTitle.textContent = `Prenota ${roomName}`;
+
+        const lang = window.currentLang || 'it';
+        const prefix = window.translations[lang]["modal-booking-prefix"] || (lang === 'it' ? 'Prenota ' : 'Book ');
+        modalRoomTitle.textContent = `${prefix}${roomName}`;
         selectedRoomIdInput.value = roomId;
 
         // Resetta i campi del modulo ogni volta che si apre
@@ -101,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
             altInput: true,          // Mostra un input più leggibile all'utente
             altFormat: "d F Y",      // Formato leggibile (es: 15 Giugno 2026)
             minDate: "today",        // Non si può prenotare nel passato
-            locale: "it",            // Traduzione in italiano
+            locale: window.currentLang || "it",            // Traduzione dinamica
             disable: blockedDates,   // Disabilita le date già occupate
             onReady: function (selectedDates, dateStr, instance) {
                 // Assicura che il calendario sia sopra il modal
@@ -138,11 +141,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Composizione del messaggio finale
-        const roomName = modalRoomTitle.textContent.replace('Prenota ', '');
-        const checkIn = fp.selectedDates[0].toLocaleDateString('it-IT');
-        const checkOut = fp.selectedDates[1].toLocaleDateString('it-IT');
+        const lang = window.currentLang || 'it';
+        const t = window.translations[lang];
 
-        const message = `Ciao io sono *${nome}* e vorrei prenotare la camera *${roomName}* per *${persone} persone* per queste date: dal ${checkIn} al ${checkOut}`;
+        const roomName = modalRoomTitle.textContent.replace(t["modal-booking-prefix"], '');
+        const dateLocale = lang === 'it' ? 'it-IT' : 'en-GB';
+        const checkIn = fp.selectedDates[0].toLocaleDateString(dateLocale);
+        const checkOut = fp.selectedDates[1].toLocaleDateString(dateLocale);
+
+        const message = `${t["wa-greet"]}*${nome}*${t["wa-want-to-book"]}*${roomName}*${t["wa-for"]}*${persone}${t["wa-people"]}*${t["wa-dates-from"]}${checkIn}${t["wa-to"]}${checkOut}`;
 
         const whatsappNumber = "393397993428";
         const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
