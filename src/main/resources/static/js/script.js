@@ -117,10 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // TOUCH EVENTS per lo swipe su mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let touchStartY = 0;
-        let touchEndY = 0;
+        let touchStartX = null;
+        let touchEndX = null;
+        let touchStartY = null;
+        let touchEndY = null;
         let isSwiping = false;
 
         track.addEventListener('touchstart', (e) => {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         track.addEventListener('touchmove', (e) => {
-            if (!touchStartX || !touchStartY) return;
+            if (touchStartX === null || touchStartY === null) return;
 
             const currentX = e.touches[0].clientX;
             const currentY = e.touches[0].clientY;
@@ -148,8 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
         track.addEventListener('touchend', (e) => {
             if (!isSwiping) {
                 // Reset e ignora se non era uno swipe orizzontale
-                touchStartX = 0;
-                touchStartY = 0;
+                touchStartX = null;
+                touchStartY = null;
                 return;
             }
 
@@ -172,11 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Reset
-            touchStartX = 0;
-            touchStartY = 0;
-            touchEndX = 0;
-            touchEndY = 0;
+            // Reset completo
+            touchStartX = null;
+            touchStartY = null;
+            touchEndX = null;
+            touchEndY = null;
             isSwiping = false;
         }, { passive: true });
 
