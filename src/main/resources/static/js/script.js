@@ -116,77 +116,69 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // POINTER EVENTS per lo swipe su mobile (più stabili dei Touch Events)
-        let pointerStartX = null;
-        let pointerStartY = null;
-        let isMoving = false;
+        // SWIPE TOUCH (Versione Strutturale Fase 3)
+        let touchStartX = null;
+        let touchStartY = null;
+        let isHorizontalSwipe = false;
 
-        const handlePointerDown = (e) => {
-            // Salva posizione iniziale
-            pointerStartX = e.clientX;
-            pointerStartY = e.clientY;
-            isMoving = false;
+        // Blocca il trascinamento nativo delle immagini che spesso rompe lo swipe
+        slides.forEach(slide => {
+            const img = slide.querySelector('img');
+            if (img) {
+                img.draggable = false;
+                img.addEventListener('dragstart', (e) => e.preventDefault());
+            }
+        });
 
-            // "Cattura" il puntatore così gli eventi arrivano qui anche se il dito esce dall'area
-            track.setPointerCapture(e.pointerId);
-        };
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isHorizontalSwipe = false;
+        }, { passive: true });
 
-        const handlePointerMove = (e) => {
-            if (pointerStartX === null || pointerStartY === null) return;
+        track.addEventListener('touchmove', (e) => {
+            if (touchStartX === null || touchStartY === null) return;
 
-            const currentX = e.clientX;
-            const currentY = e.clientY;
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const diffX = Math.abs(currentX - touchStartX);
+            const diffY = Math.abs(currentY - touchStartY);
 
-            const diffX = Math.abs(currentX - pointerStartX);
-            const diffY = Math.abs(currentY - pointerStartY);
+            // Determiniamo se lo swipe è orizzontale
+            if (!isHorizontalSwipe && diffX > 10 && diffX > diffY) {
+                isHorizontalSwipe = true;
+            }
 
-            // Se il movimento orizzontale è prevalente, consideriamo che stiamo swipando
-            if (diffX > diffY && diffX > 10) {
-                isMoving = true;
-                // Impedisce lo scroll della pagina durante lo swipe orizzontale
+            // Se stiamo swipando orizzontalmente, BLOCHIAMO lo scroll della pagina
+            if (isHorizontalSwipe) {
                 if (e.cancelable) e.preventDefault();
             }
-        };
+        }, { passive: false }); // FONDAMENTALE: permette preventDefault
 
-        const handlePointerUp = (e) => {
-            track.releasePointerCapture(e.pointerId);
-
-            if (pointerStartX === null || pointerStartY === null || !isMoving) {
-                pointerStartX = null;
-                pointerStartY = null;
+        track.addEventListener('touchend', (e) => {
+            if (touchStartX === null || !isHorizontalSwipe) {
+                touchStartX = null;
+                touchStartY = null;
                 return;
             }
 
-            const pointerEndX = e.clientX;
-            const diffX = pointerEndX - pointerStartX;
-            const swipeThreshold = 50; // Soglia sensibile
+            const touchEndX = e.changedTouches[0].clientX;
+            const diffX = touchEndX - touchStartX;
+            const swipeThreshold = 50;
 
             if (Math.abs(diffX) > swipeThreshold) {
                 if (diffX > 0) {
-                    moveToSlide(currentIndex - 1); // Indietro
+                    moveToSlide(currentIndex - 1);
                 } else {
-                    moveToSlide(currentIndex + 1); // Avanti
+                    moveToSlide(currentIndex + 1);
                 }
             }
 
-            // Reset totale
-            pointerStartX = null;
-            pointerStartY = null;
-            isMoving = false;
-        };
-
-        const handlePointerCancel = (e) => {
-            track.releasePointerCapture(e.pointerId);
-            pointerStartX = null;
-            pointerStartY = null;
-            isMoving = false;
-        };
-
-        // Aggancia i Pointer Events
-        track.addEventListener('pointerdown', handlePointerDown);
-        track.addEventListener('pointermove', handlePointerMove);
-        track.addEventListener('pointerup', handlePointerUp);
-        track.addEventListener('pointercancel', handlePointerCancel);
+            // Reset garantito
+            touchStartX = null;
+            touchStartY = null;
+            isHorizontalSwipe = false;
+        }, { passive: true });
 
         // Funzione per gestire la visibilità delle frecce
         const updateArrowsVisibility = () => {
@@ -351,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "about-history": "La Nostra Storia",
             "about-tradition": "Tradizione & Ospitalità",
             "about-p1": "Il <strong>B&B Marinella</strong> nasce nel 2025, appena ristrutturato e dotato di ogni comfort, con un obiettivo preciso: far conoscere ai nostri ospiti la vera ospitalità napoletana attraverso una gestione autenticamente familiare.",
-            "about-p2": "La nostra struttura si trova all’interno del suggestivo <strong>Fondaco di Via San Gregorio Armeno</strong>, nel cuore del centro storico di Napoli. Il fondaco è uno degli ultimi sopravvissuti al “Risanamento” dell’Ottocento: uno spazio unico, simile a una piccola piazza interna sulla quale si affacciano edifici che ricordano dei veri e propri palazzi.",
+            "about-p2": "La nostra struttura si trova all’interno del suggestivo <strong>Fondaco di Via San Gregorio Armeno</strong>, nel cuore del centro storico di Napoli. Il fondaco è uno degli ultimi sopravviviuti al “Risanamento” dell’Ottocento: uno spazio unico, simile a una piccola piazza interna sulla quale si affacciano edifici che ricordano dei veri e propri palazzi.",
             "about-sanmartino": "Si racconta che proprio in questo fondaco nacque <strong>Giuseppe Sanmartino</strong>, lo scultore del celebre <em>Cristo Velato</em> custodito nella Cappella Sansevero, a pochi passi dalla nostra struttura. Un dettaglio che rende questo luogo ancora più carico di storia, arte e fascino.",
             "about-interiors": "Gli interni moderni ed eleganti si fondono con il calore della tradizione, creando un ambiente accogliente e raffinato. Ogni dettaglio è stato pensato per farvi sentire a casa, offrendovi un rifugio di pace e comfort dopo una giornata trascorsa tra i vicoli, i musei, le meraviglie artistiche e il mare della nostra città.",
             "rooms-title": "Le Nostre Stanze",

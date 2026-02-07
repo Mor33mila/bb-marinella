@@ -681,6 +681,15 @@ a {
         transform: none;
         box-shadow: var(--shadow-md);
     }
+
+    /* Ottimizzazione tocco e swipe mobile */
+    .carousel-track,
+    .carousel-slide,
+    .carousel-slide img {
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
 }
 
 /* GRIGLIA SERVIZI: Layout a icone per i comfort della struttura */
