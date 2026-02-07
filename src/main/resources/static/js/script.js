@@ -121,34 +121,63 @@ document.addEventListener('DOMContentLoaded', () => {
         let touchEndX = 0;
         let touchStartY = 0;
         let touchEndY = 0;
+        let isSwiping = false;
 
-        const handleSwipe = () => {
-            const swipeThreshold = 50; // Distanza minima per considerarlo uno swipe
-            const horizontalSwipe = Math.abs(touchEndX - touchStartX);
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isSwiping = false;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!touchStartX || !touchStartY) return;
+
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+
+            const diffX = Math.abs(currentX - touchStartX);
+            const diffY = Math.abs(currentY - touchStartY);
+
+            // Se il movimento orizzontale è significativamente maggiore del verticale,
+            // consideriamo questo uno swipe orizzontale
+            if (diffX > diffY && diffX > 10) {
+                isSwiping = true;
+            }
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            if (!isSwiping) {
+                // Reset e ignora se non era uno swipe orizzontale
+                touchStartX = 0;
+                touchStartY = 0;
+                return;
+            }
+
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+
+            const swipeThreshold = 75; // Soglia più alta per evitare swipe accidentali
+            const horizontalSwipe = touchEndX - touchStartX;
             const verticalSwipe = Math.abs(touchEndY - touchStartY);
+            const horizontalDistance = Math.abs(horizontalSwipe);
 
-            // Procedi solo se lo swipe è prevalentemente orizzontale
-            if (horizontalSwipe > verticalSwipe && horizontalSwipe > swipeThreshold) {
-                if (touchEndX < touchStartX) {
+            // Procedi solo se lo swipe è prevalentemente orizzontale e supera la soglia
+            if (horizontalDistance > verticalSwipe && horizontalDistance > swipeThreshold) {
+                if (horizontalSwipe < 0) {
                     // Swipe verso sinistra -> foto successiva
                     moveToSlide(currentIndex + 1);
-                }
-                if (touchEndX > touchStartX) {
+                } else {
                     // Swipe verso destra -> foto precedente
                     moveToSlide(currentIndex - 1);
                 }
             }
-        };
 
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            handleSwipe();
+            // Reset
+            touchStartX = 0;
+            touchStartY = 0;
+            touchEndX = 0;
+            touchEndY = 0;
+            isSwiping = false;
         }, { passive: true });
 
         // Funzione per gestire la visibilità delle frecce
