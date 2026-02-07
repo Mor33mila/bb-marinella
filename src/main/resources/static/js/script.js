@@ -116,68 +116,42 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // TOUCH EVENTS per lo swipe su mobile
+        // TOUCH EVENTS per lo swipe su mobile - versione semplificata
         let touchStartX = null;
-        let touchEndX = null;
         let touchStartY = null;
-        let touchEndY = null;
-        let isSwiping = false;
 
         track.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-            isSwiping = false;
-        }, { passive: true });
-
-        track.addEventListener('touchmove', (e) => {
-            if (touchStartX === null || touchStartY === null) return;
-
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-
-            const diffX = Math.abs(currentX - touchStartX);
-            const diffY = Math.abs(currentY - touchStartY);
-
-            // Se il movimento orizzontale è significativamente maggiore del verticale,
-            // consideriamo questo uno swipe orizzontale
-            if (diffX > diffY && diffX > 10) {
-                isSwiping = true;
-            }
         }, { passive: true });
 
         track.addEventListener('touchend', (e) => {
-            if (!isSwiping) {
-                // Reset e ignora se non era uno swipe orizzontale
-                touchStartX = null;
-                touchStartY = null;
+            if (touchStartX === null || touchStartY === null) {
                 return;
             }
 
-            touchEndX = e.changedTouches[0].clientX;
-            touchEndY = e.changedTouches[0].clientY;
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
 
-            const swipeThreshold = 75; // Soglia più alta per evitare swipe accidentali
-            const horizontalSwipe = touchEndX - touchStartX;
-            const verticalSwipe = Math.abs(touchEndY - touchStartY);
-            const horizontalDistance = Math.abs(horizontalSwipe);
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const absDeltaX = Math.abs(deltaX);
+            const absDeltaY = Math.abs(deltaY);
 
-            // Procedi solo se lo swipe è prevalentemente orizzontale e supera la soglia
-            if (horizontalDistance > verticalSwipe && horizontalDistance > swipeThreshold) {
-                if (horizontalSwipe < 0) {
-                    // Swipe verso sinistra -> foto successiva
-                    moveToSlide(currentIndex + 1);
-                } else {
-                    // Swipe verso destra -> foto precedente
+            // Swipe orizzontale: movimento orizzontale > verticale E supera soglia
+            if (absDeltaX > absDeltaY && absDeltaX > 75) {
+                if (deltaX > 0) {
+                    // Swipe destra -> foto precedente
                     moveToSlide(currentIndex - 1);
+                } else {
+                    // Swipe sinistra -> foto successiva
+                    moveToSlide(currentIndex + 1);
                 }
             }
 
-            // Reset completo
+            // Reset sempre
             touchStartX = null;
             touchStartY = null;
-            touchEndX = null;
-            touchEndY = null;
-            isSwiping = false;
         }, { passive: true });
 
         // Funzione per gestire la visibilità delle frecce
