@@ -123,7 +123,23 @@ document.addEventListener('DOMContentLoaded', () => {
         track.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-        }, { passive: true });
+        });
+
+        track.addEventListener('touchmove', (e) => {
+            if (touchStartX === null || touchStartY === null) return;
+
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+
+            const diffX = Math.abs(currentX - touchStartX);
+            const diffY = Math.abs(currentY - touchStartY);
+
+            // Se l'utente sta chiaramente swipando orizzontalmente (X > Y),
+            // allora impediamo lo scroll verticale della pagina.
+            if (diffX > diffY && diffX > 10) {
+                if (e.cancelable) e.preventDefault();
+            }
+        }, { passive: false });
 
         track.addEventListener('touchend', (e) => {
             if (touchStartX === null || touchStartY === null) return;
@@ -148,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Reset garantito
             touchStartX = null;
             touchStartY = null;
-        }, { passive: true });
+        });
 
         // Funzione per gestire la visibilità delle frecce
         const updateArrowsVisibility = () => {
