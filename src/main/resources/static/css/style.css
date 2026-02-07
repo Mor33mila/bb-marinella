@@ -667,6 +667,12 @@ a {
     .carousel-btn {
         display: none !important;
     }
+
+    /* Disabilita l'effetto hover sulle immagini per migliorare lo swipe */
+    .carousel-slide img:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
+    }
 }
 
 /* GRIGLIA SERVIZI: Layout a icone per i comfort della struttura */
