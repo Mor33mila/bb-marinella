@@ -280,7 +280,7 @@ a {
 
 /* SEZIONE HERO: Stile del banner di benvenuto a inizio pagina */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)), url('../img/Napoli01.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)), url('../img/Napoli01.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -757,12 +757,12 @@ a {
 
 /* SFONDI PERSONALIZZATI CON GRADIENTE: Serve a rendere il testo sempre leggibile sopra le immagini */
 .neapolis-card {
-    background: linear-gradient(rgba(28, 44, 66, 0.75), rgba(28, 44, 66, 0.75)), url('../img/sotterrata1.png') no-repeat center center;
+    background: linear-gradient(rgba(28, 44, 66, 0.75), rgba(28, 44, 66, 0.75)), url('../img/sotterrata1.webp') no-repeat center center;
     background-size: cover;
 }
 
 .ristoranti-card {
-    background: linear-gradient(rgba(28, 44, 66, 0.75), rgba(28, 44, 66, 0.75)), url('../img/tavola1.png') no-repeat center center;
+    background: linear-gradient(rgba(28, 44, 66, 0.75), rgba(28, 44, 66, 0.75)), url('../img/tavola1.webp') no-repeat center center;
     background-size: cover;
 }
 
