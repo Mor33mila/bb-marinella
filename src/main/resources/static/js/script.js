@@ -116,9 +116,62 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // Listener per i pulsanti Avanti e Indietro
+        // TOUCH EVENTS per lo swipe su mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        const handleSwipe = () => {
+            const swipeThreshold = 50; // Distanza minima per considerarlo uno swipe
+            const horizontalSwipe = Math.abs(touchEndX - touchStartX);
+            const verticalSwipe = Math.abs(touchEndY - touchStartY);
+
+            // Procedi solo se lo swipe è prevalentemente orizzontale
+            if (horizontalSwipe > verticalSwipe && horizontalSwipe > swipeThreshold) {
+                if (touchEndX < touchStartX) {
+                    // Swipe verso sinistra -> foto successiva
+                    moveToSlide(currentIndex + 1);
+                }
+                if (touchEndX > touchStartX) {
+                    // Swipe verso destra -> foto precedente
+                    moveToSlide(currentIndex - 1);
+                }
+            }
+        };
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+
+        // Funzione per gestire la visibilità delle frecce
+        const updateArrowsVisibility = () => {
+            const isMobile = window.innerWidth <= 1024;
+            if (isMobile) {
+                nextButton.style.setProperty('display', 'none', 'important');
+                prevButton.style.setProperty('display', 'none', 'important');
+            } else {
+                nextButton.style.removeProperty('display');
+                prevButton.style.removeProperty('display');
+            }
+        };
+
+        // Listener per i pulsanti Avanti e Indietro (solo su desktop)
         nextButton.addEventListener('click', () => moveToSlide(currentIndex + 1));
         prevButton.addEventListener('click', () => moveToSlide(currentIndex - 1));
+
+        // Applica la visibilità iniziale
+        updateArrowsVisibility();
+
+        // Gestisci il ridimensionamento della finestra
+        window.addEventListener('resize', updateArrowsVisibility);
     };
 
     // Inizializza tutti i carousel presenti nella pagina
@@ -213,13 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 8. LOGICA SLIDER RECENSIONI
-    // Gestisce lo scorrimento delle recensioni (Booking/Google)
+    // 8. LOGICA SLIDER RECENSIONI CON AUTOPLAY
+    // Gestisce lo scorrimento automatico delle recensioni (Booking/Google)
     const reviewsTrack = document.getElementById('reviewsTrack');
-    const revPrev = document.getElementById('revPrev');
-    const revNext = document.getElementById('revNext');
 
-    if (reviewsTrack && revPrev && revNext) {
+    if (reviewsTrack) {
         let revIndex = 0;
         const slides = reviewsTrack.querySelectorAll('.reviews-slide');
         const totalSlides = slides.length;
@@ -229,15 +280,11 @@ document.addEventListener('DOMContentLoaded', () => {
             reviewsTrack.style.transform = `translateX(${amountToMove}%)`;
         };
 
-        revNext.addEventListener('click', () => {
+        // Autoplay: cambia slide ogni 5 secondi
+        setInterval(() => {
             revIndex = (revIndex + 1) % totalSlides;
             updateReviewsSlider();
-        });
-
-        revPrev.addEventListener('click', () => {
-            revIndex = (revIndex - 1 + totalSlides) % totalSlides;
-            updateReviewsSlider();
-        });
+        }, 5000); //5000ms = 5 secondi
     }
 
     // 9. AGGIORNAMENTO AUTOMATICO ANNO COPYRIGHT

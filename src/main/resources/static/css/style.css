@@ -663,34 +663,9 @@ a {
         /* Smaller height on mobile */
     }
 
+    /* Nascondi le frecce su mobile - ora si usa lo swipe */
     .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    .carousel-btn:hover {
-        /* Prevents the 'sticky' hover color on mobile */
-        background: white;
-        color: var(--primary-color);
-        transform: translateY(-50%) scale(1);
-    }
-
-    .carousel-btn:active {
-        /* The active effect specifically requested */
-        background: var(--primary-color) !important;
-        color: white !important;
-        transform: translateY(-50%) scale(0.9) !important;
-        transition: none;
-        /* Instant feedback */
-    }
-
-    .carousel-btn.prev {
-        left: 10px;
-    }
-
-    .carousel-btn.next {
-        right: 10px;
+        display: none !important;
     }
 }
 
