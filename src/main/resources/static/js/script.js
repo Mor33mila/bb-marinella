@@ -116,9 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // TOUCH EVENTS per lo swipe su mobile - versione semplificata
+        // TOUCH EVENTS per lo swipe su mobile - versione con debouncing
         let touchStartX = null;
         let touchStartY = null;
+        let isAnimating = false;
 
         track.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
@@ -126,7 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         track.addEventListener('touchend', (e) => {
-            if (touchStartX === null || touchStartY === null) {
+            // Ignora se sta già animando o se non ci sono coordinate iniziali
+            if (isAnimating || touchStartX === null || touchStartY === null) {
+                touchStartX = null;
+                touchStartY = null;
                 return;
             }
 
@@ -140,6 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Swipe orizzontale: movimento orizzontale > verticale E supera soglia
             if (absDeltaX > absDeltaY && absDeltaX > 75) {
+                isAnimating = true;
+
                 if (deltaX > 0) {
                     // Swipe destra -> foto precedente
                     moveToSlide(currentIndex - 1);
@@ -147,6 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Swipe sinistra -> foto successiva
                     moveToSlide(currentIndex + 1);
                 }
+
+                // Sblocca dopo l'animazione (300ms è la durata della transition CSS)
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 350);
             }
 
             // Reset sempre
