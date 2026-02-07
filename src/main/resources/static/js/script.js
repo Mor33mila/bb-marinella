@@ -116,10 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // TOUCH EVENTS per lo swipe su mobile - versione con debouncing
+        // TOUCH EVENTS per lo swipe su mobile - Versione ultra-stabile
         let touchStartX = null;
         let touchStartY = null;
-        let isAnimating = false;
 
         track.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
@@ -127,40 +126,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         track.addEventListener('touchend', (e) => {
-            // Ignora se sta già animando o se non ci sono coordinate iniziali
-            if (isAnimating || touchStartX === null || touchStartY === null) {
-                touchStartX = null;
-                touchStartY = null;
-                return;
-            }
+            if (touchStartX === null || touchStartY === null) return;
 
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].clientY;
 
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
-            const absDeltaX = Math.abs(deltaX);
-            const absDeltaY = Math.abs(deltaY);
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+            const absX = Math.abs(diffX);
+            const absY = Math.abs(diffY);
 
-            // Swipe orizzontale: movimento orizzontale > verticale E supera soglia
-            if (absDeltaX > absDeltaY && absDeltaX > 75) {
-                isAnimating = true;
-
-                if (deltaX > 0) {
-                    // Swipe destra -> foto precedente
-                    moveToSlide(currentIndex - 1);
+            // Soglia minima di 40px per lo swipe
+            if (absX > absY && absX > 40) {
+                if (diffX > 0) {
+                    moveToSlide(currentIndex - 1); // Swipe destra -> precedente
                 } else {
-                    // Swipe sinistra -> foto successiva
-                    moveToSlide(currentIndex + 1);
+                    moveToSlide(currentIndex + 1); // Swipe sinistra -> successiva
                 }
-
-                // Sblocca dopo l'animazione (300ms è la durata della transition CSS)
-                setTimeout(() => {
-                    isAnimating = false;
-                }, 350);
             }
 
-            // Reset sempre
+            // Reset garantito
             touchStartX = null;
             touchStartY = null;
         }, { passive: true });
