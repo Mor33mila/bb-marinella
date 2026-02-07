@@ -116,55 +116,77 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // TOUCH EVENTS per lo swipe su mobile - Versione ultra-stabile
-        let touchStartX = null;
-        let touchStartY = null;
+        // POINTER EVENTS per lo swipe su mobile (più stabili dei Touch Events)
+        let pointerStartX = null;
+        let pointerStartY = null;
+        let isMoving = false;
 
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
+        const handlePointerDown = (e) => {
+            // Salva posizione iniziale
+            pointerStartX = e.clientX;
+            pointerStartY = e.clientY;
+            isMoving = false;
 
-        track.addEventListener('touchmove', (e) => {
-            if (touchStartX === null || touchStartY === null) return;
+            // "Cattura" il puntatore così gli eventi arrivano qui anche se il dito esce dall'area
+            track.setPointerCapture(e.pointerId);
+        };
 
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
+        const handlePointerMove = (e) => {
+            if (pointerStartX === null || pointerStartY === null) return;
 
-            const diffX = Math.abs(currentX - touchStartX);
-            const diffY = Math.abs(currentY - touchStartY);
+            const currentX = e.clientX;
+            const currentY = e.clientY;
 
-            // Se l'utente sta chiaramente swipando orizzontalmente (X > Y),
-            // allora impediamo lo scroll verticale della pagina.
+            const diffX = Math.abs(currentX - pointerStartX);
+            const diffY = Math.abs(currentY - pointerStartY);
+
+            // Se il movimento orizzontale è prevalente, consideriamo che stiamo swipando
             if (diffX > diffY && diffX > 10) {
+                isMoving = true;
+                // Impedisce lo scroll della pagina durante lo swipe orizzontale
                 if (e.cancelable) e.preventDefault();
             }
-        }, { passive: false });
+        };
 
-        track.addEventListener('touchend', (e) => {
-            if (touchStartX === null || touchStartY === null) return;
+        const handlePointerUp = (e) => {
+            track.releasePointerCapture(e.pointerId);
 
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
+            if (pointerStartX === null || pointerStartY === null || !isMoving) {
+                pointerStartX = null;
+                pointerStartY = null;
+                return;
+            }
 
-            const diffX = touchEndX - touchStartX;
-            const diffY = touchEndY - touchStartY;
-            const absX = Math.abs(diffX);
-            const absY = Math.abs(diffY);
+            const pointerEndX = e.clientX;
+            const diffX = pointerEndX - pointerStartX;
+            const swipeThreshold = 50; // Soglia sensibile
 
-            // Soglia minima di 40px per lo swipe
-            if (absX > absY && absX > 40) {
+            if (Math.abs(diffX) > swipeThreshold) {
                 if (diffX > 0) {
-                    moveToSlide(currentIndex - 1); // Swipe destra -> precedente
+                    moveToSlide(currentIndex - 1); // Indietro
                 } else {
-                    moveToSlide(currentIndex + 1); // Swipe sinistra -> successiva
+                    moveToSlide(currentIndex + 1); // Avanti
                 }
             }
 
-            // Reset garantito
-            touchStartX = null;
-            touchStartY = null;
-        });
+            // Reset totale
+            pointerStartX = null;
+            pointerStartY = null;
+            isMoving = false;
+        };
+
+        const handlePointerCancel = (e) => {
+            track.releasePointerCapture(e.pointerId);
+            pointerStartX = null;
+            pointerStartY = null;
+            isMoving = false;
+        };
+
+        // Aggancia i Pointer Events
+        track.addEventListener('pointerdown', handlePointerDown);
+        track.addEventListener('pointermove', handlePointerMove);
+        track.addEventListener('pointerup', handlePointerUp);
+        track.addEventListener('pointercancel', handlePointerCancel);
 
         // Funzione per gestire la visibilità delle frecce
         const updateArrowsVisibility = () => {
@@ -528,9 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "rule-arrival-desc": "From 08:00 to 20:00",
             "rule-departure": "Departure",
             "rule-departure-desc": "From 08:00 to 10:00",
-            "rules-subtitle": "House Rules",
-            "rule-arrival": "Arrival",
-            "rule-departure": "Departure",
             "rule-smoke": "Smoking",
             "rule-smoke-desc": "Smoking is not allowed",
             "rule-pets": "Pets",
