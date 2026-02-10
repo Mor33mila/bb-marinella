@@ -1562,25 +1562,21 @@ span.flatpickr-weekday {
 }
 
 .reviews-slide {
-    min-width: 100%;
-    padding: 20px 60px;
-    /* Reduced from 80px to give more room on transition */
+    min-width: 50%;
+    /* Due recensioni visibili su desktop */
+    padding: 0 15px;
+    box-sizing: border-box;
 }
 
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    /* Use 280px to avoid overflow on mobile */
-    gap: 40px;
-    justify-content: center;
-    max-width: 1300px;
-    margin: 0 auto;
-}
+@media (max-width: 1024px) {
+    .reviews-slide {
+        min-width: 100%;
+        /* Una recensione visibile su mobile */
+        padding: 0 10px;
+    }
 
-@media (min-width: 1025px) {
-    .grid-centered-2 {
-        grid-template-columns: repeat(2, 550px);
-        justify-content: center;
+    .review-card {
+        padding: 15px;
     }
 }
 

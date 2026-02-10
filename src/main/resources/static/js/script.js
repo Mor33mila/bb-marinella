@@ -364,15 +364,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalSlides = slides.length;
 
         const updateReviewsSlider = () => {
-            const amountToMove = -revIndex * 100;
+            const isMob = window.innerWidth <= 1024;
+            // Su mobile scorriamo di 100% (una slide), su desktop di 50% (una slide alla volta ma ne vediamo due)
+            const step = isMob ? 100 : 50;
+            const amountToMove = -revIndex * step;
             reviewsTrack.style.transform = `translateX(${amountToMove}%)`;
         };
 
         // Autoplay: cambia slide ogni 5 secondi
         setInterval(() => {
-            revIndex = (revIndex + 1) % totalSlides;
+            const isMob = window.innerWidth <= 1024;
+            // Su desktop ne vediamo 2 alla volta, quindi il limite di indici è totalSlides - 1
+            // ma l'ultimo indice "sicuro" che mostra ancora 2 slide è totalSlides - 2
+            const maxIndex = isMob ? totalSlides : totalSlides - 1;
+
+            revIndex++;
+            if (revIndex >= maxIndex) {
+                revIndex = 0;
+            }
             updateReviewsSlider();
-        }, 5000); //5000ms = 5 secondi
+        }, 5000);
+
+        window.addEventListener('resize', updateReviewsSlider);
     }
 
     // 9. AGGIORNAMENTO AUTOMATICO ANNO COPYRIGHT
