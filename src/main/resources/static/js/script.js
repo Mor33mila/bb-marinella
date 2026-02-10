@@ -81,13 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const initCarousel = (container) => {
         const track = container.querySelector('.carousel-track');
         const slides = Array.from(track.children);
-        const nextButton = container.querySelector('.carousel-btn.next');
-        const prevButton = container.querySelector('.carousel-btn.prev');
         const indicatorsContainer = container.querySelector('.carousel-indicators');
 
         let currentIndex = 0;
+        let isDragging = false;
+        let startX = 0;
+        let diffX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
 
-        // Crea dinamicamente i puntini (indicatori) in base al numero di foto
+        // Crea dinamicamente i puntini (indicatori)
         slides.forEach((_, index) => {
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
@@ -98,146 +101,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const indicators = Array.from(indicatorsContainer.children);
 
-        // Aggiorna lo stato visivo dei puntini indicatori
         const updateIndicators = (index) => {
             indicators.forEach((ind, i) => {
                 ind.classList.toggle('active', i === index);
             });
         };
 
-        // Muove lo slider alla foto corrispondente all'indice
-        const moveToSlide = (index) => {
-            if (index < 0) index = slides.length - 1;   // Torna all'ultima foto
-            if (index >= slides.length) index = 0;      // Torna alla prima foto
+        const setPositionByIndex = () => {
+            currentTranslate = -currentIndex * container.offsetWidth;
+            prevTranslate = currentTranslate;
+            track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            track.style.transform = `translateX(${currentTranslate}px)`;
+        };
 
+        const moveToSlide = (index) => {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
             currentIndex = index;
-            const amountToMove = -currentIndex * 100;
-            track.style.transform = `translateX(${amountToMove}%)`;
+            setPositionByIndex();
             updateIndicators(currentIndex);
         };
 
-        // SWIPE TOUCH (Versione Pointer Events - Ottimizzata per iOS)
-        let isDragging = false;
-        let startPos = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID;
-        let startTime = 0;
+        // Inizializzazione posizione
+        setPositionByIndex();
 
-        // Disabilita il menu contestuale sulle immagini (utile per iOS)
+        // Disabilita drag nativo e menu contestuale sulle immagini
         slides.forEach(slide => {
             const img = slide.querySelector('img');
             if (img) {
-                img.addEventListener('contextmenu', (e) => {
-                    // Previene il menu contestuale solo se stiamo trascinando
-                    if (isDragging) e.preventDefault();
-                });
+                img.draggable = false;
+                img.addEventListener('contextmenu', e => isDragging && e.preventDefault());
             }
         });
 
-        const touchStart = (index) => {
-            return (event) => {
-                isDragging = true;
-                startTime = new Date().getTime();
-                startPos = getPositionX(event);
-
-                // Importante per iOS: cattura il puntatore
-                try {
-                    track.setPointerCapture(event.pointerId);
-                } catch (e) {
-                    console.warn("Pointer capture failed", e);
-                }
-
-                animationID = requestAnimationFrame(animation);
-                track.classList.add('grabbing');
-            }
-        }
-
-        const touchEnd = () => {
-            return (event) => {
-                isDragging = false;
-                cancelAnimationFrame(animationID);
-                track.classList.remove('grabbing');
-
-                try {
-                    track.releasePointerCapture(event.pointerId);
-                } catch (e) {
-                    console.warn("Pointer release failed", e);
-                }
-
-                const movedBy = currentTranslate - prevTranslate;
-                const endTime = new Date().getTime();
-                const timeDiff = endTime - startTime;
-
-                // Soglia di swipe: movimento > 50px oppure movimento veloce
-                // Se è uno swipe veloce (meno di 300ms) basta un movimento minore
-                const threshold = (timeDiff < 300) ? 20 : 50;
-
-                if (movedBy < -threshold) {
-                    moveToSlide(currentIndex + 1);
-                } else if (movedBy > threshold) {
-                    moveToSlide(currentIndex - 1);
-                } else {
-                    // Se non supera la soglia, torna alla slide corrente
-                    moveToSlide(currentIndex);
-                }
-
-                // Resetta le variabili di trascinamento per evitare "drift"
-                // Non serve aggiornare prevTranslate qui perché moveToSlide lo farà indirettamente aggiornando currentIndex
-            }
-        }
-
-        const touchMove = (event) => {
-            if (isDragging) {
-                const currentPosition = getPositionX(event);
-                const diff = currentPosition - startPos;
-                currentTranslate = prevTranslate + diff;
-
-                // Opzionale: muovi visivamente la traccia mentre trascini
-                // track.style.transform = `translateX(calc(${-currentIndex * 100}% + ${diff}px))`;
-            }
-        }
-
-        const getPositionX = (event) => {
-            return event.type.includes('mouse') ? event.pageX : event.clientX;
-        }
-
-        const animation = () => {
-            if (isDragging) requestAnimationFrame(animation);
-        }
-
-        // Pointer Events (supporta Mouse, Touch, Pen)
-        track.addEventListener('pointerdown', touchStart(currentIndex));
-        track.addEventListener('pointermax', touchEnd); // Fallback raro
-        track.addEventListener('pointerup', touchEnd());
-        track.addEventListener('pointercancel', touchEnd());
-        track.addEventListener('pointerleave', () => {
-            if (isDragging) touchEnd()();
+        track.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            track.style.transition = 'none';
+            track.classList.add('grabbing');
+            try {
+                track.setPointerCapture(e.pointerId);
+            } catch (err) { }
         });
-        track.addEventListener('pointermove', touchMove);
 
+        track.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.clientX;
+            diffX = currentX - startX;
+            track.style.transform = `translateX(${prevTranslate + diffX}px)`;
+        });
 
-        // Funzione per gestire la visibilità delle frecce
-        const updateArrowsVisibility = () => {
-            const isMobile = window.innerWidth <= 1024;
-            if (isMobile) {
-                nextButton.style.setProperty('display', 'none', 'important');
-                prevButton.style.setProperty('display', 'none', 'important');
+        const handlePointerUp = (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            track.classList.remove('grabbing');
+            try {
+                track.releasePointerCapture(e.pointerId);
+            } catch (err) { }
+
+            const threshold = container.offsetWidth * 0.15;
+            if (Math.abs(diffX) > threshold) {
+                if (diffX > 0) moveToSlide(currentIndex - 1);
+                else moveToSlide(currentIndex + 1);
             } else {
-                nextButton.style.removeProperty('display');
-                prevButton.style.removeProperty('display');
+                moveToSlide(currentIndex);
             }
+            diffX = 0;
         };
 
-        // Listener per i pulsanti Avanti e Indietro (solo su desktop)
-        nextButton.addEventListener('click', () => moveToSlide(currentIndex + 1));
-        prevButton.addEventListener('click', () => moveToSlide(currentIndex - 1));
+        track.addEventListener('pointerup', handlePointerUp);
+        track.addEventListener('pointercancel', handlePointerUp);
+        track.addEventListener('pointerleave', handlePointerUp);
 
-        // Applica la visibilità iniziale
-        updateArrowsVisibility();
-
-        // Gestisci il ridimensionamento della finestra
-        window.addEventListener('resize', updateArrowsVisibility);
+        window.addEventListener('resize', () => {
+            track.style.transition = 'none';
+            setPositionByIndex();
+        });
     };
 
     // Inizializza tutti i carousel presenti nella pagina
