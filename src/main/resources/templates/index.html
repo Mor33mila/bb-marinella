@@ -216,7 +216,8 @@
                             matrimoniale alla francese</strong> (piazza e mezza), ideale per chi cerca praticità e
                         comfort nel cuore di Napoli a un prezzo vantaggioso.</p>
                     <a href="#" class="btn-primary open-booking-modal" data-room="stanza1"
-                        data-room-name="Suite Vesuvio" style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;">
+                        data-room-name="Suite Vesuvio" data-umami-event="click-book-vesuvio"
+                        style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;">
                         <span data-i18n="room-btn-vesuvio">Prenota Vesuvio</span>
                     </a>
                 </div>
@@ -285,7 +286,7 @@
                             matrimoniale</strong>, con la possibilità di aggiungere un <strong>letto singolo
                             extra</strong>. Perfetta per chi desidera il massimo del lusso e dello spazio.</p>
                     <a href="#" class="btn-primary open-booking-modal" data-room="stanza2"
-                        data-room-name="Suite Partenope"
+                        data-room-name="Suite Partenope" data-umami-event="click-book-partenope"
                         style="margin-top: 15px; font-size: 0.8rem; padding: 10px 25px;"><span
                             data-i18n="room-btn-partenope">Prenota Partenope</span></a>
                 </div>
@@ -733,7 +734,8 @@
 
         </div>
         <div class="text-center" style="margin-top: 50px;">
-            <a href="https://g.page/r/CXLZn9XHeBUYEBM/review" target="_blank" class="btn-review">
+            <a href="https://g.page/r/CXLZn9XHeBUYEBM/review" target="_blank" class="btn-review"
+                data-umami-event="click-review-google">
                 <i class="fab fa-google"></i> <span data-i18n="review-btn">Lascia una Recensione su Google</span>
             </a>
             <p class="text-muted" style="font-size: 0.85rem; margin-top: 15px;" data-i18n="review-note">La tua opinione
@@ -755,10 +757,11 @@
 
             <div class="footer-socials">
                 <a href="https://www.instagram.com/bbmarinella_?igsh=MXUyNHR6dW5ieDNzNQ%3D%3D&utm_source=qr"
-                    target="_blank" title="Seguici su Instagram">
+                    target="_blank" title="Seguici su Instagram" data-umami-event="click-instagram-footer">
                     <i class="fab fa-instagram fa-2x"></i>
                 </a>
-                <a href="https://wa.me/393397993428" target="_blank" title="Contattaci su WhatsApp">
+                <a href="https://wa.me/393397993428" target="_blank" title="Contattaci su WhatsApp"
+                    data-umami-event="click-whatsapp-footer">
                     <i class="fab fa-whatsapp fa-2x"></i>
                 </a>
             </div>
@@ -831,9 +834,9 @@
     <!-- Script specifico per la logica di prenotazione e disponibilità -->
     <script src="../static/js/booking.js" th:src="@{/js/booking.js(v=1.8)}"></script>
 
-    <!-- GoatCounter: Monitoraggio visite (Privacy-friendly, senza cookie) -->
-    <script data-goatcounter="https://bbmarinella.goatcounter.com/count" async
-        src="https://gc.zgo.at/count.js"></script>
+    <!-- Umami Analytics: Monitoraggio professionale (Privacy-friendly, senza cookie) -->
+    <script defer src="https://cloud.umami.is/script.js"
+        data-website-id="cb66bbf2-91c6-4e47-8105-2b8e61ad19ba"></script>
 </body>
 
 </html>

@@ -154,6 +154,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const whatsappNumber = "393397993428";
         const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
+        // Tracciamo l'evento di conversione su Umami prima di aprire WhatsApp
+        if (window.umami) {
+            umami.track('send-booking-request', {
+                room: document.getElementById('selectedRoomId').value,
+                guests: persone,
+                lang: window.currentLang
+            });
+        }
+
         // Apri WhatsApp in una nuova scheda
         window.open(url, '_blank');
         closeModal();
