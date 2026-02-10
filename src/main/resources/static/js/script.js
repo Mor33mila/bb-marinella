@@ -134,31 +134,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // SWIPE TOUCH (Revisione 3 - Ottimizzata per WebKit/iOS)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchDiffX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+
+            track.style.transition = 'none';
+            track.classList.add('grabbing');
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+
+            touchDiffX = currentX - touchStartX;
+            const touchDiffY = currentY - touchStartY;
+
+            // Logica cruciale per iOS: 
+            // Se il movimento è prevalentemente orizzontale, blocchiamo lo scroll verticale di sistema
+            if (Math.abs(touchDiffX) > Math.abs(touchDiffY)) {
+                if (e.cancelable) e.preventDefault();
+                track.style.transform = `translateX(${prevTranslate + touchDiffX}px)`;
+            }
+        }, { passive: false }); // FONDAMENTALE: passive: false permette e.preventDefault()
+
+        track.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            track.classList.remove('grabbing');
+
+            const threshold = container.offsetWidth * 0.15;
+
+            if (Math.abs(touchDiffX) > threshold) {
+                if (touchDiffX > 0) moveToSlide(currentIndex - 1);
+                else moveToSlide(currentIndex + 1);
+            } else {
+                moveToSlide(currentIndex);
+            }
+            touchDiffX = 0;
+        }, { passive: true });
+
+        // Fallback per Mouse su Desktop (manteniamo i Pointer Events solo per mouse)
         track.addEventListener('pointerdown', (e) => {
+            if (e.pointerType !== 'mouse') return;
             isDragging = true;
             startX = e.clientX;
             track.style.transition = 'none';
             track.classList.add('grabbing');
-            try {
-                track.setPointerCapture(e.pointerId);
-            } catch (err) { }
         });
 
         track.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            const currentX = e.clientX;
-            diffX = currentX - startX;
+            if (!isDragging || e.pointerType !== 'mouse') return;
+            diffX = e.clientX - startX;
             track.style.transform = `translateX(${prevTranslate + diffX}px)`;
         });
 
-        const handlePointerUp = (e) => {
-            if (!isDragging) return;
+        const handleMouseUp = (e) => {
+            if (!isDragging || e.pointerType !== 'mouse') return;
             isDragging = false;
             track.classList.remove('grabbing');
-            try {
-                track.releasePointerCapture(e.pointerId);
-            } catch (err) { }
-
             const threshold = container.offsetWidth * 0.15;
             if (Math.abs(diffX) > threshold) {
                 if (diffX > 0) moveToSlide(currentIndex - 1);
@@ -169,9 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
             diffX = 0;
         };
 
-        track.addEventListener('pointerup', handlePointerUp);
-        track.addEventListener('pointercancel', handlePointerUp);
-        track.addEventListener('pointerleave', handlePointerUp);
+        track.addEventListener('pointerup', handleMouseUp);
+        track.addEventListener('pointerleave', handleMouseUp);
 
         window.addEventListener('resize', () => {
             track.style.transition = 'none';
