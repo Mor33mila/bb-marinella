@@ -116,69 +116,106 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
-        // SWIPE TOUCH (Versione Strutturale Fase 3)
-        let touchStartX = null;
-        let touchStartY = null;
-        let isHorizontalSwipe = false;
+        // SWIPE TOUCH (Versione Pointer Events - Ottimizzata per iOS)
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let startTime = 0;
 
-        // Blocca il trascinamento nativo delle immagini che spesso rompe lo swipe
+        // Disabilita il menu contestuale sulle immagini (utile per iOS)
         slides.forEach(slide => {
             const img = slide.querySelector('img');
             if (img) {
-                img.draggable = false;
-                img.addEventListener('dragstart', (e) => e.preventDefault());
+                img.addEventListener('contextmenu', (e) => {
+                    // Previene il menu contestuale solo se stiamo trascinando
+                    if (isDragging) e.preventDefault();
+                });
             }
         });
 
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-            isHorizontalSwipe = false;
-        }, { passive: true });
+        const touchStart = (index) => {
+            return (event) => {
+                isDragging = true;
+                startTime = new Date().getTime();
+                startPos = getPositionX(event);
 
-        track.addEventListener('touchmove', (e) => {
-            if (touchStartX === null || touchStartY === null) return;
+                // Importante per iOS: cattura il puntatore
+                try {
+                    track.setPointerCapture(event.pointerId);
+                } catch (e) {
+                    console.warn("Pointer capture failed", e);
+                }
 
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-            const diffX = Math.abs(currentX - touchStartX);
-            const diffY = Math.abs(currentY - touchStartY);
-
-            // Determiniamo se lo swipe è orizzontale
-            if (!isHorizontalSwipe && diffX > 10 && diffX > diffY) {
-                isHorizontalSwipe = true;
+                animationID = requestAnimationFrame(animation);
+                track.classList.add('grabbing');
             }
+        }
 
-            // Se stiamo swipando orizzontalmente, BLOCHIAMO lo scroll della pagina
-            if (isHorizontalSwipe) {
-                if (e.cancelable) e.preventDefault();
-            }
-        }, { passive: false }); // FONDAMENTALE: permette preventDefault
+        const touchEnd = () => {
+            return (event) => {
+                isDragging = false;
+                cancelAnimationFrame(animationID);
+                track.classList.remove('grabbing');
 
-        track.addEventListener('touchend', (e) => {
-            if (touchStartX === null || !isHorizontalSwipe) {
-                touchStartX = null;
-                touchStartY = null;
-                return;
-            }
+                try {
+                    track.releasePointerCapture(event.pointerId);
+                } catch (e) {
+                    console.warn("Pointer release failed", e);
+                }
 
-            const touchEndX = e.changedTouches[0].clientX;
-            const diffX = touchEndX - touchStartX;
-            const swipeThreshold = 50;
+                const movedBy = currentTranslate - prevTranslate;
+                const endTime = new Date().getTime();
+                const timeDiff = endTime - startTime;
 
-            if (Math.abs(diffX) > swipeThreshold) {
-                if (diffX > 0) {
+                // Soglia di swipe: movimento > 50px oppure movimento veloce
+                // Se è uno swipe veloce (meno di 300ms) basta un movimento minore
+                const threshold = (timeDiff < 300) ? 20 : 50;
+
+                if (movedBy < -threshold) {
+                    moveToSlide(currentIndex + 1);
+                } else if (movedBy > threshold) {
                     moveToSlide(currentIndex - 1);
                 } else {
-                    moveToSlide(currentIndex + 1);
+                    // Se non supera la soglia, torna alla slide corrente
+                    moveToSlide(currentIndex);
                 }
-            }
 
-            // Reset garantito
-            touchStartX = null;
-            touchStartY = null;
-            isHorizontalSwipe = false;
-        }, { passive: true });
+                // Resetta le variabili di trascinamento per evitare "drift"
+                // Non serve aggiornare prevTranslate qui perché moveToSlide lo farà indirettamente aggiornando currentIndex
+            }
+        }
+
+        const touchMove = (event) => {
+            if (isDragging) {
+                const currentPosition = getPositionX(event);
+                const diff = currentPosition - startPos;
+                currentTranslate = prevTranslate + diff;
+
+                // Opzionale: muovi visivamente la traccia mentre trascini
+                // track.style.transform = `translateX(calc(${-currentIndex * 100}% + ${diff}px))`;
+            }
+        }
+
+        const getPositionX = (event) => {
+            return event.type.includes('mouse') ? event.pageX : event.clientX;
+        }
+
+        const animation = () => {
+            if (isDragging) requestAnimationFrame(animation);
+        }
+
+        // Pointer Events (supporta Mouse, Touch, Pen)
+        track.addEventListener('pointerdown', touchStart(currentIndex));
+        track.addEventListener('pointermax', touchEnd); // Fallback raro
+        track.addEventListener('pointerup', touchEnd());
+        track.addEventListener('pointercancel', touchEnd());
+        track.addEventListener('pointerleave', () => {
+            if (isDragging) touchEnd()();
+        });
+        track.addEventListener('pointermove', touchMove);
+
 
         // Funzione per gestire la visibilità delle frecce
         const updateArrowsVisibility = () => {
