@@ -157,10 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Se siamo sul clone finale, dopo l'animazione saltiamo all'inizio
                 if (currentIndex === slides.length - 1) {
                     setTimeout(() => {
+                        track.style.scrollBehavior = 'auto';
                         currentIndex = 1;
                         setPositionByIndex(false);
-                        updateIndicators(currentIndex);
-                    }, 500);
+                    }, 550); // Leggermente più della transizione CSS (500ms)
                 }
             });
         }
@@ -173,10 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Se siamo sul clone iniziale, dopo l'animazione saltiamo alla fine
                 if (currentIndex === 0) {
                     setTimeout(() => {
+                        track.style.scrollBehavior = 'auto';
                         currentIndex = slides.length - 2;
                         setPositionByIndex(false);
-                        updateIndicators(currentIndex);
-                    }, 500);
+                    }, 550);
                 }
             });
         }
@@ -191,20 +191,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const scrollLeft = track.scrollLeft;
             const width = track.offsetWidth;
-            const newIndex = Math.round(scrollLeft / width);
 
-            // Se arriviamo sui cloni, teletrasporto immediato alla slide reale
+            // Se arriviamo sui cloni (estremi del nastro), saltiamo istantaneamente
             if (scrollLeft <= 0) {
                 isRedirecting = true;
                 currentIndex = slides.length - 2;
-                track.scrollLeft = currentIndex * width;
-                setTimeout(() => isRedirecting = false, 50);
-            } else if (scrollLeft >= (slides.length - 1) * width - 5) {
+                track.scrollTo({ left: currentIndex * width, behavior: 'auto' });
+                setTimeout(() => isRedirecting = false, 100);
+            } else if (scrollLeft >= (slides.length - 1) * width - 1) {
                 isRedirecting = true;
                 currentIndex = 1;
-                track.scrollLeft = currentIndex * width;
-                setTimeout(() => isRedirecting = false, 50);
+                track.scrollTo({ left: currentIndex * width, behavior: 'auto' });
+                setTimeout(() => isRedirecting = false, 100);
             } else {
+                const newIndex = Math.round(scrollLeft / width);
                 if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
                     currentIndex = newIndex;
                     updateIndicators(currentIndex);

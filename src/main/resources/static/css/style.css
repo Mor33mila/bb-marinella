@@ -670,7 +670,6 @@ a {
         height: 400px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         /* Momentum scroll su iOS */
         scrollbar-width: none;
