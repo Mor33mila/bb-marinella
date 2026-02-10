@@ -666,14 +666,29 @@ a {
     border-color: white;
 }
 
-/* Responsive fixes for carousel */
 @media (max-width: 1024px) {
     .carousel-track {
         height: 400px;
-        /* Smaller height on mobile */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        /* Momentum scroll su iOS */
+        scrollbar-width: none;
+        /* Nasconde scrollbar Firefox */
     }
 
-    /* Nascondi le frecce su mobile - ora si usa lo swipe */
+    .carousel-track::-webkit-scrollbar {
+        display: none;
+        /* Nasconde scrollbar Chrome/Safari */
+    }
+
+    .carousel-slide {
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+
+    /* Nascondi le frecce su mobile - ora si usa lo swipe nativo */
     .carousel-btn {
         display: none !important;
     }
@@ -684,23 +699,7 @@ a {
         box-shadow: var(--shadow-md);
     }
 
-    /* Disabilita l'effetto hover sulle room-card su mobile */
-    .room-card:hover {
-        transform: none;
-        box-shadow: var(--shadow-md);
-    }
-
-    /* Ottimizzazione tocco e swipe mobile */
-    .carousel-track {
-        touch-action: pan-y;
-        /* Permette scroll verticale, gestiamo noi orizzontale */
-        user-select: none;
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-    }
-
     .carousel-slide img {
-        touch-action: pan-y;
         user-select: none;
         -webkit-user-select: none;
         -webkit-user-drag: none;

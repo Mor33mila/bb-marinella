@@ -107,11 +107,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        const setPositionByIndex = () => {
-            currentTranslate = -currentIndex * container.offsetWidth;
-            prevTranslate = currentTranslate;
-            track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            track.style.transform = `translateX(${currentTranslate}px)`;
+        // NAVIGAZIONE (Revisione 4 - Native Scroll + JS Sync)
+        const isMobile = () => window.innerWidth <= 1024;
+
+        // Funzione per impostare la posizione (usata su desktop o click indicatori)
+        const setPositionByIndex = (smooth = true) => {
+            if (isMobile()) {
+                track.scrollTo({
+                    left: currentIndex * track.offsetWidth,
+                    behavior: smooth ? 'smooth' : 'auto'
+                });
+            } else {
+                currentTranslate = -currentIndex * container.offsetWidth;
+                prevTranslate = currentTranslate;
+                track.style.transition = smooth ? 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            }
         };
 
         const moveToSlide = (index) => {
@@ -123,67 +134,22 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Inizializzazione posizione
-        setPositionByIndex();
+        setTimeout(() => setPositionByIndex(false), 100);
 
-        // Disabilita drag nativo e menu contestuale sulle immagini
-        slides.forEach(slide => {
-            const img = slide.querySelector('img');
-            if (img) {
-                img.draggable = false;
-                img.addEventListener('contextmenu', e => isDragging && e.preventDefault());
+        // SYNC INDICATORS SU MOBILE (Scroll Listener)
+        track.addEventListener('scroll', () => {
+            if (!isMobile()) return;
+            // Calcola l'indice basandosi sulla posizione attuale di scroll
+            const newIndex = Math.round(track.scrollLeft / track.offsetWidth);
+            if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
+                currentIndex = newIndex;
+                updateIndicators(currentIndex);
             }
         });
 
-        // SWIPE TOUCH (Revisione 3 - Ottimizzata per WebKit/iOS)
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchDiffX = 0;
-
-        track.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-
-            track.style.transition = 'none';
-            track.classList.add('grabbing');
-        }, { passive: true });
-
-        track.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-
-            touchDiffX = currentX - touchStartX;
-            const touchDiffY = currentY - touchStartY;
-
-            // Logica cruciale per iOS: 
-            // Se il movimento è prevalentemente orizzontale, blocchiamo lo scroll verticale di sistema
-            if (Math.abs(touchDiffX) > Math.abs(touchDiffY)) {
-                if (e.cancelable) e.preventDefault();
-                track.style.transform = `translateX(${prevTranslate + touchDiffX}px)`;
-            }
-        }, { passive: false }); // FONDAMENTALE: passive: false permette e.preventDefault()
-
-        track.addEventListener('touchend', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            track.classList.remove('grabbing');
-
-            const threshold = container.offsetWidth * 0.15;
-
-            if (Math.abs(touchDiffX) > threshold) {
-                if (touchDiffX > 0) moveToSlide(currentIndex - 1);
-                else moveToSlide(currentIndex + 1);
-            } else {
-                moveToSlide(currentIndex);
-            }
-            touchDiffX = 0;
-        }, { passive: true });
-
-        // Fallback per Mouse su Desktop (manteniamo i Pointer Events solo per mouse)
+        // SWIPE MANUAL (Solo Desktop / Mouse)
         track.addEventListener('pointerdown', (e) => {
-            if (e.pointerType !== 'mouse') return;
+            if (isMobile() || e.pointerType !== 'mouse') return;
             isDragging = true;
             startX = e.clientX;
             track.style.transition = 'none';
@@ -191,13 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         track.addEventListener('pointermove', (e) => {
-            if (!isDragging || e.pointerType !== 'mouse') return;
+            if (!isDragging || isMobile() || e.pointerType !== 'mouse') return;
             diffX = e.clientX - startX;
             track.style.transform = `translateX(${prevTranslate + diffX}px)`;
         });
 
         const handleMouseUp = (e) => {
-            if (!isDragging || e.pointerType !== 'mouse') return;
+            if (!isDragging || isMobile() || e.pointerType !== 'mouse') return;
             isDragging = false;
             track.classList.remove('grabbing');
             const threshold = container.offsetWidth * 0.15;
@@ -214,8 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
         track.addEventListener('pointerleave', handleMouseUp);
 
         window.addEventListener('resize', () => {
-            track.style.transition = 'none';
-            setPositionByIndex();
+            if (!isMobile()) {
+                track.style.transition = 'none';
+                setPositionByIndex(false);
+            }
         });
     };
 
