@@ -660,7 +660,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Esponi traduzioni e lingua corrente al global scope per booking.js
     window.translations = translations;
-    window.currentLang = localStorage.getItem('bb-lang') || 'it';
+
+    // Rilevamento lingua: 
+    // 1. Controlla se l'utente ha già scelto una lingua (localStorage)
+    // 2. Altrimenti controlla la lingua del browser (navigator.language)
+    // 3. Default a 'it' solo se il browser è in italiano, altrimenti 'en'
+    const getInitialLang = () => {
+        const saved = localStorage.getItem('bb-lang');
+        if (saved) return saved;
+
+        const browserLang = navigator.language || navigator.userLanguage;
+        return browserLang.startsWith('it') ? 'it' : 'en';
+    };
+
+    window.currentLang = getInitialLang();
     const langSwitcher = document.getElementById('langSwitcher');
     const langFlag = document.getElementById('langFlag');
 
