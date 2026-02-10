@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
             indicatorsContainer.appendChild(indicator);
         });
 
+        const nextButton = container.querySelector('.carousel-btn.next');
+        const prevButton = container.querySelector('.carousel-btn.prev');
+
         const indicators = Array.from(indicatorsContainer.children);
 
         const updateIndicators = (index) => {
@@ -133,13 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
             updateIndicators(currentIndex);
         };
 
+        // Click sui pulsanti (Desktop)
+        if (nextButton) nextButton.addEventListener('click', () => moveToSlide(currentIndex + 1));
+        if (prevButton) prevButton.addEventListener('click', () => moveToSlide(currentIndex - 1));
+
         // Inizializzazione posizione
         setTimeout(() => setPositionByIndex(false), 100);
 
         // SYNC INDICATORS SU MOBILE (Scroll Listener)
         track.addEventListener('scroll', () => {
             if (!isMobile()) return;
-            // Calcola l'indice basandosi sulla posizione attuale di scroll
             const newIndex = Math.round(track.scrollLeft / track.offsetWidth);
             if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
                 currentIndex = newIndex;

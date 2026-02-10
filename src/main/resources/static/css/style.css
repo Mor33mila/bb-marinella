@@ -557,12 +557,11 @@ a {
 .carousel-track {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Scorrimento fluido */
     height: auto;
     align-items: center;
     background-color: transparent;
-    touch-action: pan-y;
-    /* Permette lo scroll verticale ma riserva il movimento orizzontale al JS */
+    touch-action: auto;
+    /* Permette lo scorrimento nativo del browser */
 }
 
 .carousel-slide {
