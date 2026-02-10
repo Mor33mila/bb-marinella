@@ -80,40 +80,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestisce lo slider di foto in ogni sezione (Camere, Spazi, etc.)
     const initCarousel = (container) => {
         const track = container.querySelector('.carousel-track');
-        const slides = Array.from(track.children);
+        let slides = Array.from(track.children);
         const indicatorsContainer = container.querySelector('.carousel-indicators');
+        const nextButton = container.querySelector('.carousel-btn.next');
+        const prevButton = container.querySelector('.carousel-btn.prev');
 
-        let currentIndex = 0;
+        // CLONAZIONE PER LOOP INFINITO
+        const firstClone = slides[0].cloneNode(true);
+        const lastClone = slides[slides.length - 1].cloneNode(true);
+
+        track.appendChild(firstClone);
+        track.insertBefore(lastClone, slides[0]);
+
+        // Aggiorna l'elenco delle slide dopo il clonaggio
+        slides = Array.from(track.children);
+
+        let currentIndex = 1; // Partiamo dalla prima foto "vera" (indice 1 perché c'è il clone in testa)
         let isDragging = false;
         let startX = 0;
         let diffX = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
 
-        // Crea dinamicamente i puntini (indicatori)
-        slides.forEach((_, index) => {
+        // Crea dinamicamente i puntini (indicatori) basati solo sulle slide ORIGINALI
+        const originalCount = slides.length - 2;
+        for (let i = 0; i < originalCount; i++) {
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
-            if (index === 0) indicator.classList.add('active');
-            indicator.addEventListener('click', () => moveToSlide(index));
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => moveToSlide(i + 1));
             indicatorsContainer.appendChild(indicator);
-        });
-
-        const nextButton = container.querySelector('.carousel-btn.next');
-        const prevButton = container.querySelector('.carousel-btn.prev');
+        }
 
         const indicators = Array.from(indicatorsContainer.children);
 
         const updateIndicators = (index) => {
+            // Mapping dell'indice (1 to originalCount) verso (0 to originalCount-1)
+            let indicatorIndex = index - 1;
+            if (index === 0) indicatorIndex = originalCount - 1;
+            if (index === slides.length - 1) indicatorIndex = 0;
+
             indicators.forEach((ind, i) => {
-                ind.classList.toggle('active', i === index);
+                ind.classList.toggle('active', i === indicatorIndex);
             });
         };
 
-        // NAVIGAZIONE (Revisione 4 - Native Scroll + JS Sync)
         const isMobile = () => window.innerWidth <= 1024;
 
-        // Funzione per impostare la posizione (usata su desktop o click indicatori)
         const setPositionByIndex = (smooth = true) => {
             if (isMobile()) {
                 track.scrollTo({
@@ -129,27 +142,73 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const moveToSlide = (index) => {
-            if (index < 0) index = slides.length - 1;
-            if (index >= slides.length) index = 0;
             currentIndex = index;
             setPositionByIndex();
             updateIndicators(currentIndex);
         };
 
         // Click sui pulsanti (Desktop)
-        if (nextButton) nextButton.addEventListener('click', () => moveToSlide(currentIndex + 1));
-        if (prevButton) prevButton.addEventListener('click', () => moveToSlide(currentIndex - 1));
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                currentIndex++;
+                setPositionByIndex();
+                updateIndicators(currentIndex);
 
-        // Inizializzazione posizione
+                // Se siamo sul clone finale, dopo l'animazione saltiamo all'inizio
+                if (currentIndex === slides.length - 1) {
+                    setTimeout(() => {
+                        currentIndex = 1;
+                        setPositionByIndex(false);
+                        updateIndicators(currentIndex);
+                    }, 500);
+                }
+            });
+        }
+        if (prevButton) {
+            prevButton.addEventListener('click', () => {
+                currentIndex--;
+                setPositionByIndex();
+                updateIndicators(currentIndex);
+
+                // Se siamo sul clone iniziale, dopo l'animazione saltiamo alla fine
+                if (currentIndex === 0) {
+                    setTimeout(() => {
+                        currentIndex = slides.length - 2;
+                        setPositionByIndex(false);
+                        updateIndicators(currentIndex);
+                    }, 500);
+                }
+            });
+        }
+
+        // Inizializzazione posizione (partiamo dalla slide 1)
         setTimeout(() => setPositionByIndex(false), 100);
 
-        // SYNC INDICATORS SU MOBILE (Scroll Listener)
+        // GESTIONE INFINITA SU MOBILE (Scroll Listener)
+        let isRedirecting = false;
         track.addEventListener('scroll', () => {
-            if (!isMobile()) return;
-            const newIndex = Math.round(track.scrollLeft / track.offsetWidth);
-            if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
-                currentIndex = newIndex;
-                updateIndicators(currentIndex);
+            if (!isMobile() || isRedirecting) return;
+
+            const scrollLeft = track.scrollLeft;
+            const width = track.offsetWidth;
+            const newIndex = Math.round(scrollLeft / width);
+
+            // Se arriviamo sui cloni, teletrasporto immediato alla slide reale
+            if (scrollLeft <= 0) {
+                isRedirecting = true;
+                currentIndex = slides.length - 2;
+                track.scrollLeft = currentIndex * width;
+                setTimeout(() => isRedirecting = false, 50);
+            } else if (scrollLeft >= (slides.length - 1) * width - 5) {
+                isRedirecting = true;
+                currentIndex = 1;
+                track.scrollLeft = currentIndex * width;
+                setTimeout(() => isRedirecting = false, 50);
+            } else {
+                if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
+                    currentIndex = newIndex;
+                    updateIndicators(currentIndex);
+                }
             }
         });
 
@@ -173,11 +232,19 @@ document.addEventListener('DOMContentLoaded', () => {
             isDragging = false;
             track.classList.remove('grabbing');
             const threshold = container.offsetWidth * 0.15;
+
             if (Math.abs(diffX) > threshold) {
-                if (diffX > 0) moveToSlide(currentIndex - 1);
-                else moveToSlide(currentIndex + 1);
-            } else {
-                moveToSlide(currentIndex);
+                if (diffX > 0) currentIndex--;
+                else currentIndex++;
+            }
+
+            moveToSlide(currentIndex);
+
+            // Loop infinito per mouse
+            if (currentIndex === 0) {
+                setTimeout(() => moveToSlide(slides.length - 2), 500);
+            } else if (currentIndex === slides.length - 1) {
+                setTimeout(() => moveToSlide(1), 500);
             }
             diffX = 0;
         };
@@ -186,7 +253,9 @@ document.addEventListener('DOMContentLoaded', () => {
         track.addEventListener('pointerleave', handleMouseUp);
 
         window.addEventListener('resize', () => {
-            if (!isMobile()) {
+            if (isMobile()) {
+                // Su mobile lo scroll snap gestisce il resize meglio
+            } else {
                 track.style.transition = 'none';
                 setPositionByIndex(false);
             }
