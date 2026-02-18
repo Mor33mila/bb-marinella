@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.open-booking-modal').forEach(btn => {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
+            e.stopPropagation(); // Evita interferenze con altri script (es: smooth scroll)
             const roomId = this.getAttribute('data-room');
             const roomName = this.getAttribute('data-room-name');
 
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Funzione principale per aprire il modal e preparare i campi
     function openModal(roomId, roomName) {
         modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Blocca lo scroll dello sfondo
 
         const lang = window.currentLang || 'it';
         const prefix = window.translations[lang]["modal-booking-prefix"] || (lang === 'it' ? 'Prenota ' : 'Book ');
@@ -68,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Funzione per chiudere il modal e pulire il calendario
     function closeModal() {
         modal.style.display = 'none';
+        document.body.style.overflow = ''; // Ripristina lo scroll dello sfondo
         if (fp) {
             fp.clear();
         }
