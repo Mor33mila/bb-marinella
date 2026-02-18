@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'hidden'; // Blocca lo scroll dello sfondo
 
         const lang = window.currentLang || 'it';
-        const prefix = window.translations[lang]["modal-booking-prefix"] || (lang === 'it' ? 'Prenota ' : 'Book ');
+        const t = window.translations[lang];
+        const prefix = t["modal-booking-prefix"] || (lang === 'it' ? 'Prenota ' : 'Book ');
         modalRoomTitle.textContent = `${prefix}${roomName}`;
         selectedRoomIdInput.value = roomId;
 
@@ -53,14 +54,18 @@ document.addEventListener('DOMContentLoaded', function () {
         modalPersone.value = '';
         modalDateRange.value = '';
 
+        // Aggiorna i placeholder con la lingua corrente
+        modalNome.placeholder = t["modal-name-placeholder"] || 'Il tuo nome';
+        modalDateRange.placeholder = t["modal-dates-placeholder"] || 'Arrivo - Partenza';
+
         // Imposta la capacità massima dinamicamente in base alla camera scelta
         // stanza1 = Suite Vesuvio (2 persone), stanza2 = Suite Partenope (3 persone)
         if (roomId === 'stanza1') {
             modalPersone.max = 2;
-            modalPersone.placeholder = "Max 2 persone";
+            modalPersone.placeholder = t["modal-guests-placeholder-v"] || 'Max 2 persone';
         } else {
             modalPersone.max = 3;
-            modalPersone.placeholder = "Max 3 persone";
+            modalPersone.placeholder = t["modal-guests-placeholder-p"] || 'Max 3 persone';
         }
 
         // Inizializza o aggiorna Flatpickr per caricare le date occupate corrette
