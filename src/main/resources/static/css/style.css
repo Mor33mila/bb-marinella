@@ -1430,6 +1430,57 @@ footer {
     text-align: center;
 }
 
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-booking {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-email {
+    background-color: var(--primary-color);
+}
+
+.btn-email:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(166, 123, 91, 0.3);
+}
+
+@media (max-width: 1024px) {
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

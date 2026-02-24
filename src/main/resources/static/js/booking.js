@@ -122,57 +122,101 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 5. GESTIONE DELLA PRENOTAZIONE (INVIO WHATSAPP)
-    modalPrenotaBtn.addEventListener('click', function () {
+    const modalWhatsappBtn = document.getElementById('modalWhatsappBtn');
+    const modalEmailBtn = document.getElementById('modalEmailBtn');
+
+    // ... existing logic ...
+
+    // Funzione di validazione e preparazione dati (comune a WhatsApp ed Email)
+    function validateAndGetBookingData() {
         // Validazione date
         if (!fp || fp.selectedDates.length < 2) {
-            alert("Per favore seleziona una data di arrivo e una di partenza.");
-            return;
+            alert(window.currentLang === 'it' ? "Per favore seleziona una data di arrivo e una di partenza." : "Please select an arrival and departure date.");
+            return null;
         }
 
         // Validazione nome
-        const nome = modalNome.value;
+        const nome = modalNome.value.trim();
         if (!nome) {
-            alert("Inserisci il tuo nome.");
-            return;
+            alert(window.currentLang === 'it' ? "Inserisci il tuo nome." : "Please enter your name.");
+            return null;
         }
 
         // Validazione numero persone
         const persone = modalPersone.value;
         const maxPersone = modalPersone.max;
         if (!persone || persone < 1) {
-            alert("Inserisci il numero di persone.");
-            return;
+            alert(window.currentLang === 'it' ? "Inserisci il numero di persone." : "Please enter the number of guests.");
+            return null;
         }
         if (parseInt(persone) > parseInt(maxPersone)) {
-            alert(`Questa camera può ospitare al massimo ${maxPersone} persone.`);
-            return;
+            const alertMsg = window.currentLang === 'it' ?
+                `Questa camera può ospitare al massimo ${maxPersone} persone.` :
+                `This room can accommodate a maximum of ${maxPersone} guests.`;
+            alert(alertMsg);
+            return null;
         }
 
-        // Composizione del messaggio finale
         const lang = window.currentLang || 'it';
         const t = window.translations[lang];
-
         const roomName = modalRoomTitle.textContent.replace(t["modal-booking-prefix"], '');
         const dateLocale = lang === 'it' ? 'it-IT' : 'en-GB';
         const checkIn = fp.selectedDates[0].toLocaleDateString(dateLocale);
         const checkOut = fp.selectedDates[1].toLocaleDateString(dateLocale);
 
-        const message = `${t["wa-greet"]}*${nome}*${t["wa-want-to-book"]}*${roomName}*${t["wa-for"]}*${persone}${t["wa-people"]}*${t["wa-dates-from"]}${checkIn}${t["wa-to"]}${checkOut}`;
+        return { nome, persone, roomName, checkIn, checkOut, lang, t };
+    }
 
-        const whatsappNumber = "393397993428";
-        const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    // 5. GESTIONE DELLA PRENOTAZIONE (INVIO WHATSAPP)
+    if (modalWhatsappBtn) {
+        modalWhatsappBtn.addEventListener('click', function () {
+            const data = validateAndGetBookingData();
+            if (!data) return;
 
-        // Tracciamo l'evento di conversione su Umami prima di aprire WhatsApp
-        if (window.umami) {
-            umami.track('send-booking-request', {
-                room: document.getElementById('selectedRoomId').value,
-                guests: persone,
-                lang: window.currentLang
-            });
-        }
+            const { nome, persone, roomName, checkIn, checkOut, t } = data;
+            const message = `${t["wa-greet"]}*${nome}*${t["wa-want-to-book"]}*${roomName}*${t["wa-for"]}*${persone}${t["wa-people"]}*${t["wa-dates-from"]}${checkIn}${t["wa-to"]}${checkOut}`;
 
-        // Apri WhatsApp in una nuova scheda
-        window.open(url, '_blank');
-        closeModal();
-    });
+            const whatsappNumber = "393397993428";
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+            if (window.umami) {
+                umami.track('send-booking-whatsapp', {
+                    room: selectedRoomIdInput.value,
+                    guests: persone,
+                    lang: data.lang
+                });
+            }
+
+            window.open(url, '_blank');
+            closeModal();
+        });
+    }
+
+    // 6. GESTIONE DELLA PRENOTAZIONE (INVIO EMAIL)
+    if (modalEmailBtn) {
+        modalEmailBtn.addEventListener('click', function () {
+            const data = validateAndGetBookingData();
+            if (!data) return;
+
+            const { nome, persone, roomName, checkIn, checkOut, t } = data;
+
+            // Messaggio per Email (pulito da markdown *)
+            const message = `${t["wa-greet"]}${nome}${t["wa-want-to-book"]}${roomName}${t["wa-for"]}${persone}${t["wa-people"]}${t["wa-dates-from"]}${checkIn}${t["wa-to"]}${checkOut}`;
+
+            const emailAddress = "bebmarinella@gmail.com";
+            const subject = `${t["email-subject"]}${roomName}`;
+            const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+
+            if (window.umami) {
+                umami.track('send-booking-email', {
+                    room: selectedRoomIdInput.value,
+                    guests: persone,
+                    lang: data.lang
+                });
+            }
+
+            window.location.href = mailtoUrl;
+            closeModal();
+        });
+    }
 });
