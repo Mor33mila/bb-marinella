@@ -704,9 +704,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Se la lingua corrente è IT, mostriamo la bandiera UK (prossima lingua)
-        // Se la lingua corrente è EN, mostriamo la bandiera IT
-        langFlag.innerHTML = lang === 'it' ? flags.en : flags.it;
+        // Mostriamo la bandiera della lingua corrente
+        langFlag.innerHTML = flags[lang];
 
         currentLang = lang;
         window.currentLang = lang; // Aggiorna anche la variabile globale
