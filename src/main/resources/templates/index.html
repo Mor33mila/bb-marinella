@@ -77,22 +77,22 @@
 
     <!-- BARRA DI NAVIGAZIONE (Navbar) -->
     <nav class="navbar">
-        <a th:href="@{/}" class="logo">B&B Marinella <span class="logo-sub">San Gregorio Armeno</span></a>
-        <div class="menu-toggle" id="mobile-menu">
+        <a th:href="@{/}" class="logo" data-umami-event="nav-logo">B&B Marinella <span class="logo-sub">San Gregorio Armeno</span></a>
+        <div class="menu-toggle" id="mobile-menu" data-umami-event="nav-menu-mobile">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
         <div class="nav-links">
-            <a href="#chi-siamo" data-i18n="nav-about">Chi Siamo</a>
-            <a href="#galleria" data-i18n="nav-rooms">Camere</a>
-            <a href="#galleria-full" data-i18n="nav-spaces">Spazi</a>
-            <a href="#servizi" data-i18n="nav-services">Servizi</a>
-            <a href="#regole" data-i18n="nav-rules">Regole</a>
-            <a href="#dove-siamo" data-i18n="nav-location">Dove Siamo</a>
-            <a href="#recensioni" data-i18n="nav-reviews">Recensioni</a>
-            <a href="#contatti" data-i18n="nav-contacts">Contatti</a>
-            <a href="#galleria" class="btn-primary" data-i18n="nav-book">Prenota Ora</a>
+            <a href="#chi-siamo" data-i18n="nav-about" data-umami-event="nav-chi-siamo">Chi Siamo</a>
+            <a href="#galleria" data-i18n="nav-rooms" data-umami-event="nav-camere">Camere</a>
+            <a href="#galleria-full" data-i18n="nav-spaces" data-umami-event="nav-spazi">Spazi</a>
+            <a href="#servizi" data-i18n="nav-services" data-umami-event="nav-servizi">Servizi</a>
+            <a href="#regole" data-i18n="nav-rules" data-umami-event="nav-regole">Regole</a>
+            <a href="#dove-siamo" data-i18n="nav-location" data-umami-event="nav-dove-siamo">Dove Siamo</a>
+            <a href="#recensioni" data-i18n="nav-reviews" data-umami-event="nav-recensioni">Recensioni</a>
+            <a href="#contatti" data-i18n="nav-contacts" data-umami-event="nav-contatti">Contatti</a>
+            <a href="#galleria" class="btn-primary" data-i18n="nav-book" data-umami-event="nav-prenota-ora">Prenota Ora</a>
         </div>
     </nav>
 
@@ -102,7 +102,7 @@
             <h1 data-i18n="hero-title">Benvenuti a Napoli</h1>
             <p data-i18n="hero-subtitle">Scopri il fascino della città partenopea soggiornando in un ambiente raffinato
                 ed accogliente.</p>
-            <a href="#galleria" class="btn-primary" style="margin-top: 20px;" data-i18n="hero-btn">Verifica
+            <a href="#galleria" class="btn-primary" style="margin-top: 20px;" data-i18n="hero-btn" data-umami-event="hero-verifica-disponibilita">Verifica
                 Disponibilità</a>
         </div>
     </header>
@@ -551,7 +551,7 @@
                 </div>
                 <br>
                 <a href="https://www.google.com/maps/place/B%26B+Marinella/@40.8501002,14.253374,17z/data=!3m1!4b1!4m9!3m8!1s0x133b09500ff07e8d:0x181578c7d59fd972!5m2!4m1!1i2!8m2!3d40.8500962!4d14.2579874!16s%2Fg%2F11xdvtyjkg?entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D"
-                    target="_blank" class="btn-primary" data-i18n="poi-maps">Apri in Google Maps</a>
+                    target="_blank" class="btn-primary" data-i18n="poi-maps" data-umami-event="maps-apri-google-maps">Apri in Google Maps</a>
             </div>
 
             <div class="map-container">
@@ -775,12 +775,12 @@
     </footer>
 
     <!-- Language Switcher Floating Button -->
-    <div id="langSwitcher" class="lang-switcher" title="Cambia Lingua / Change Language">
+    <div id="langSwitcher" class="lang-switcher" title="Cambia Lingua / Change Language" data-umami-event="ui-cambia-lingua">
         <div id="langFlag" style="display: flex; align-items: center; justify-content: center;"></div>
     </div>
 
     <!-- Back to Top Button -->
-    <button id="backToTop" class="back-to-top" title="Torna in alto">
+    <button id="backToTop" class="back-to-top" title="Torna in alto" data-umami-event="ui-torna-in-alto">
         <i class="fas fa-chevron-up"></i>
     </button>
 
