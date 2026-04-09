@@ -774,8 +774,50 @@
         </div>
     </footer>
 
+    <!-- Language Selection Modal -->
+    <div id="langModal" class="modal lang-modal">
+        <div class="modal-content lang-modal-content">
+            <span class="close-modal close-lang-modal" id="closeLangModal">&times;</span>
+            <h2 data-i18n="nav-language-select">Seleziona Lingua</h2>
+            <div class="lang-grid">
+                <div class="lang-option" data-lang="it">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="170.7" height="512" fill="#008c45"/><rect width="170.7" height="512" x="170.7" fill="#fff"/><rect width="170.7" height="512" x="341.3" fill="#cd212a"/></svg></div>
+                    <span>Italiano</span>
+                </div>
+                <div class="lang-option" data-lang="en">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#012169"/><path d="M0 0l512 512m0-512L0 512" stroke="#fff" stroke-width="64"/><path d="M0 0l512 512m0-512L0 512" stroke="#c8102e" stroke-width="44"/><path d="M256 0v512M0 256h512" stroke="#fff" stroke-width="110"/><path d="M256 0v512M0 256h512" stroke="#c8102e" stroke-width="70"/></svg></div>
+                    <span>English</span>
+                </div>
+                <div class="lang-option" data-lang="fr">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="170.7" height="512" fill="#002395"/><rect width="170.7" height="512" x="170.7" fill="#fff"/><rect width="170.7" height="512" x="341.3" fill="#ed2939"/></svg></div>
+                    <span>Français</span>
+                </div>
+                <div class="lang-option" data-lang="es">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#c60b1e" d="M0 0h512v128H0zm0 384h512v128H0z"/><path fill="#ffc400" d="M0 128h512v256H0z"/></svg></div>
+                    <span>Español</span>
+                </div>
+                <div class="lang-option" data-lang="pt">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ff0" d="M0 0h512v512H0z"/><path fill="#048332" d="M0 0h204.8v512H0z"/><path fill="#f00" d="M204.8 0H512v512H204.8z"/><circle cx="204.8" cy="256" r="102.4" fill="#ff0"/></svg></div>
+                    <span>Português</span>
+                </div>
+                <div class="lang-option" data-lang="de">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 0h512v170.7H0z"/><path fill="#f00" d="M0 170.7h512v170.6H0z"/><path fill="#ffce00" d="M0 341.3h512V512H0z"/></svg></div>
+                    <span>Deutsch</span>
+                </div>
+                <div class="lang-option" data-lang="pl">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M0 0h512v256H0z"/><path fill="#dc143c" d="M0 256h512v256H0z"/></svg></div>
+                    <span>Polski</span>
+                </div>
+                <div class="lang-option" data-lang="zh">
+                    <div class="flag-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ee1c25" d="M0 0h512v512H0z"/><path fill="#ffff00" d="M124.6 177.3l-28.1-14.8-28.1 14.8 5.4-31.2-22.7-22.1 31.4-4.6 14-28.4 14 28.4 31.4 4.6-22.7 22.1z"/></svg></div>
+                    <span>简体中文</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Language Switcher Floating Button -->
-    <div id="langSwitcher" class="lang-switcher" title="Cambia Lingua / Change Language" data-umami-event="ui-cambia-lingua">
+    <div id="langSwitcher" class="lang-switcher" title="Cambia Lingua / Change Language" data-umami-event="ui-apri-modal-lingua">
         <div id="langFlag" style="display: flex; align-items: center; justify-content: center;"></div>
     </div>
 
