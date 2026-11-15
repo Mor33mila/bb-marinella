@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // 1. RIFERIMENTI AGLI ELEMENTI DEL DOM
     const modal = document.getElementById('bookingModal');
-    const closeBtn = document.querySelector('.close-modal');
+    const closeBtn = modal.querySelector('.close-modal');
     const modalRoomTitle = document.getElementById('modalRoomTitle');
     const selectedRoomIdInput = document.getElementById('selectedRoomId');
     const modalNome = document.getElementById('modalNome');
